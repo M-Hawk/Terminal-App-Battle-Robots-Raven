@@ -1,4 +1,4 @@
-# Battlebots!
+# BattleRobots!
 
 add link to source control repo
 
@@ -21,6 +21,8 @@ Create links to below contents
 ### Statement of Purpose
 
 ### Features
+
+#### BattleRobot Design
 
 #### Single-Player Mode
 
