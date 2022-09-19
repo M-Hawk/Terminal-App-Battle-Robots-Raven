@@ -38,6 +38,8 @@ Add photos of game and text
 
 ## Control Flow Diagram
 
+![Control Flow Diagram for BattleRobot Design](/docs/BattleRobots%20Control%20Flowchart.png)
+
 ## Implementation Plan
 
 Add photo of Trello Board
