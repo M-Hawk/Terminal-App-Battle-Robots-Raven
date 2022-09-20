@@ -57,6 +57,7 @@ class Game():
             print(f"\n{index+1}) {item}\n")
         self.game_type = input("What game mode would you like to play? ")
         self.game_type.capitilize()
+        if self.gametype == 
 
 
 
