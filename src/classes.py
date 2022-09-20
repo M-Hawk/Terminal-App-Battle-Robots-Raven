@@ -1,7 +1,8 @@
 from random import choice
+from os import system, name
+from time import sleep
 
-
-# Player class for inidividual human players
+# Player Class for inidividual human players
 
 class Player():
     def __init__(self, name, health = 200):
@@ -31,19 +32,44 @@ class ComputerPlayer(Player):
         self.__name = name
         super().__init__(self)
 
+    # FIND A BETTER WAY THAN REPEATING CODE TO USE GETTERS SETTERS
+    def get_name(self):
+       return self.__name
 
-    # def bot_name():
-        
-        
-    #     return random_name
+    def get_health(self):
+       return self.__health
 
-
-
-
-
-
+    def set_name(self, name):
+        self.__name = name
 
 
-bot1 = ComputerPlayer()
+class Game():
 
-print(bot1.get_name())
+    def __init__(self):
+        ""
+
+    def clear_terminal(self):
+        system("cls" if name == "nt" else "clear")
+
+    def game_mode(self):
+        options = ["Single Player", "Multi Player", "Exit Game"]
+        for index, item in enumerate(options):
+            print(f"\n{index+1}) {item}\n")
+        self.game_type = input("What game mode would you like to play? ")
+        self.game_type.capitilize()
+
+
+
+
+
+
+# MAINNNN HERE
+
+game = Game()
+game.game_mode()
+
+# player1 = Player("Jax")
+# bot1 = ComputerPlayer()
+
+# print(player1.get_name())
+# print(bot1.get_name())
