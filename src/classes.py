@@ -46,46 +46,54 @@ class ComputerPlayer(Player):
 
 
 class Game():
-    def __init__(self, player_one, player_two):
-        # self.p2 = ComputerPlayer()
-        ""
+
     # Method that clears the terminal throughout the game so players don't have to scroll
+
     def clear_terminal():
         system("cls" if name == "nt" else "clear")
 
-    # Game mode select method
-    def game_mode(self):
-        Game.clear_terminal()
+    def game_mode():
         options = ["Single Player", "Multi Player", "Exit Game"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
         print(f"You have selected {options[menu_entry_index]}!")
         while menu_entry_index != 2:
-            if options[menu_entry_index]
-        # if self.game = single_player_mode()
-        # self.game = multi_player_mode()
+            if menu_entry_index == 0:
+                single_player_mode()
+            elif menu_entry_index == 1:
+                pass
+                # self.multi_player_mode()
+            menu_entry_index = terminal_menu.show()
+
+
+    def battle(self, player_one):
+        pass
 
     def single_player_mode(self):
-        pass
+        player_one_name = input("What's you're Battle Robots Name ? ")
+        player_one = Player(player_one_name)
+        print(f"Welcome, {player_one.get_name()}")
+        player_two = ComputerPlayer()
+        print(f"You're Battling! {player_two.get_name()}")
+        print(player_two.get_name())
+
+    # Game mode select method
 
 
-    def multi_player_mode(self):
-        pass
-
-    # def 
 
 
 # MAINNNN HERE
 
 
 
-player_one = Player("Jax")
-player_two = ComputerPlayer()
+# player_one = Player("Jax")
+# player_two = ComputerPlayer()
 
 # print(player1.get_name())
 # print(bot1.get_name())
 # print(bot1.get_health())
 
+player_one = Player("Jax")
 
-game = Game(player_one, player_two)
-game.game_mode()
+Game.game_mode()
+
