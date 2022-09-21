@@ -14,13 +14,16 @@ class Player():
 
     # Currently using
     def get_name(self):
-       return self.__name
+        return self.__name
 
     def get_health(self):
-       return self.__health
+        return self.__health
 
     def get_body_type(self):
         return self.__body_type
+
+    def get_arm_weapon(self):
+        return self.__arm_weapon    
     # Currently using
     def set_name(self, name):
         self.__name = name
@@ -87,6 +90,7 @@ class Game():
             if menu_entry_index == 0:
                 self.single_player_mode()
                 self.body_type_menu()
+                self.arm_weapon_menu()
             elif menu_entry_index == 1:
                 pass
                 # DO TIME PERMITTING
@@ -111,7 +115,7 @@ class Game():
 
 
     def body_type_menu(self):
-        print("Please select what body-type you want:\n")
+        print("Select what body-type you want:\n")
         body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Exit Menu"]
         terminal_menu = TerminalMenu(body_type_options)
         menu_entry_index = terminal_menu.show()
@@ -134,3 +138,29 @@ class Game():
             print("nope")
         self.clear_terminal()
         print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+
+
+    def arm_weapon_menu(self):
+        print("Select what arm-weapon you want to punish your opponent with!:\n")
+        arm_weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Exit Menu"]
+        terminal_menu = TerminalMenu(arm_weapon_options)
+        menu_entry_index = terminal_menu.show()
+        while menu_entry_index != 3:
+            print(f"You have selected {arm_weapon_options[menu_entry_index]}!\n")
+            if menu_entry_index == 0:
+                self.player_one.set_arm_weapon("Electrocutor")
+                break
+            elif menu_entry_index == 1:
+                self.player_one.set_arm_weapon("Powersaw")
+                break
+            elif menu_entry_index == 2:
+                self.player_one.set_arm_weapon("Flipper")
+                break
+            menu_entry_index = terminal_menu.show()
+        if isinstance(self.player_two, ComputerPlayer):
+            print(f"{self.player_two.get_name()} has selected: {self.player_two.get_arm_weapon()}")
+            sleep(2)
+        else:
+            print("nope")
+        self.clear_terminal()
+        print(f"You have selected {arm_weapon_options[menu_entry_index]}!\n")
