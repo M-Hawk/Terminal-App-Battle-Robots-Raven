@@ -6,23 +6,27 @@ from simple_term_menu import TerminalMenu
 # Player Class for inidividual human players
 
 class Player():
-    def __init__(self, name, health = 200, body_movement = "undefined", arm_weapon = "undefined"):
+    def __init__(self, name = "undefined", health = 200, body_type = "undefined", arm_weapon = "undefined"):
         self.__name = name
         self.__health = health
-        self.__body_movement = body_movement
+        self.__body_type = body_type
         self.__arm_weapon = arm_weapon
 
+    # Currently using
     def get_name(self):
        return self.__name
 
     def get_health(self):
        return self.__health
 
+    def get_body_type(self):
+        return self.__body_type
+    # Currently using
     def set_name(self, name):
         self.__name = name
-
-    def set_body_movement(self, body_movement):
-        self.__body_movement = body_movement
+    # Currently using
+    def set_body_type(self, body_type):
+        self.__body_type = body_type
 
     def set_arm_weapon(self, arm_weapon):
         self.__arm_weapon = arm_weapon
@@ -46,54 +50,69 @@ class ComputerPlayer(Player):
 
 
 class Game():
+    # Flag var used in gamemodes to exit game CURRENTLY DON'T NEED
+    flag = False
+    def __init__(self):
+        self.player_one = Player()
+        self.player_two = Player()
+        self.bot_one = ComputerPlayer()
+
+    # DO TIME PERMITTING
+    def introduction(self):
+        ### Add cool ASCII Picture
+        ### Add ... initializing Battle Bots ... print message
+        ### Add timer pause before menu opens
+        pass
 
     # Method that clears the terminal throughout the game so players don't have to scroll
-
-    def clear_terminal():
+    def clear_terminal(self):
         system("cls" if name == "nt" else "clear")
 
-    def game_mode():
+    def game_mode(self):
+        self.clear_terminal()
         options = ["Single Player", "Multi Player", "Exit Game"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
-        print(f"You have selected {options[menu_entry_index]}!")
+        print(f"You have selected {options[menu_entry_index]}!\n")
         while menu_entry_index != 2:
             if menu_entry_index == 0:
-                single_player_mode()
+                self.single_player_mode()
+                self.body_type()
             elif menu_entry_index == 1:
                 pass
+                # DO TIME PERMITTING
                 # self.multi_player_mode()
             menu_entry_index = terminal_menu.show()
 
 
-    def battle(self, player_one):
+    def battle(self):
         pass
 
     def single_player_mode(self):
-        player_one_name = input("What's you're Battle Robots Name ? ")
-        player_one = Player(player_one_name)
-        print(f"Welcome, {player_one.get_name()}")
-        player_two = ComputerPlayer()
-        print(f"You're Battling! {player_two.get_name()}")
-        print(player_two.get_name())
-
-    # Game mode select method
-
-
+        # ERORR HANDLE INPUT HERE
+        self.player_one.set_name(input("What's you're Battle Robots Name ? ")) 
+        print(f"\n Welcome, {self.player_one.get_name()}")
+        bot = self.bot_one
+        print(f"\n You're Battling: {self.bot_one.get_name()}!\n")
+        print("...initializing...")
+        sleep(4)
+        self.clear_terminal()
 
 
-# MAINNNN HERE
-
-
-
-# player_one = Player("Jax")
-# player_two = ComputerPlayer()
-
-# print(player1.get_name())
-# print(bot1.get_name())
-# print(bot1.get_health())
-
-player_one = Player("Jax")
-
-Game.game_mode()
-
+    def body_type(self):
+        print("Please select what body-type you want:\n")
+        body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Exit Menu"]
+        terminal_menu = TerminalMenu(body_type_options)
+        menu_entry_index = terminal_menu.show()
+        print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+        while menu_entry_index != 3:
+            if menu_entry_index == 0:
+                self.player_one.set_body_type("Tracked")
+                break
+            elif menu_entry_index == 1:
+                self.player_one.set_body_type("Soft-Wheeled")
+                break
+            elif menu_entry_index == 2:
+                self.player_one.set_body_type("Hard-Wheeled")
+                break
+            menu_entry_index = terminal_menu.show()
