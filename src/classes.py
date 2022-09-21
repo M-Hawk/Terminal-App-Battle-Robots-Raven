@@ -52,10 +52,10 @@ class ComputerPlayer(Player):
 class Game():
     # Flag var used in gamemodes to exit game CURRENTLY DON'T NEED
     flag = False
+    # Initilizes a main player and second player (either human or computer)
     def __init__(self):
-        self.player_one = Player()
-        self.player_two = Player()
-        self.bot_one = ComputerPlayer()
+        self.player_one = ""
+        self.player_two = ""
 
     # DO TIME PERMITTING
     def introduction(self):
@@ -73,39 +73,41 @@ class Game():
         options = ["Single Player", "Multi Player", "Exit Game"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
-        print(f"You have selected {options[menu_entry_index]}!\n")
         while menu_entry_index != 2:
+            print(f"You have selected {options[menu_entry_index]}!\n")
             if menu_entry_index == 0:
                 self.single_player_mode()
-                self.body_type()
+                self.body_type_menu()
             elif menu_entry_index == 1:
                 pass
                 # DO TIME PERMITTING
                 # self.multi_player_mode()
             menu_entry_index = terminal_menu.show()
-
-
+            self.clear_terminal()
+        print(f"You have selected {options[menu_entry_index]}!\n")
     def battle(self):
         pass
 
+    # ERORR HANDLE (if escape pushed) TypeError: list indices must be integers or slices, not NoneType
     def single_player_mode(self):
         # ERORR HANDLE INPUT HERE
-        self.player_one.set_name(input("What's you're Battle Robots Name ? ")) 
+        self.player_one = Player()
+        self.player_one.set_name(input("What's you're Battle Robots Name ? "))
         print(f"\n Welcome, {self.player_one.get_name()}")
-        bot = self.bot_one
-        print(f"\n You're Battling: {self.bot_one.get_name()}!\n")
+        self.player_two = ComputerPlayer()
+        print(f"\n You're Battling: {self.player_two.get_name()}!\n")
         print("...initializing...")
         sleep(4)
         self.clear_terminal()
 
 
-    def body_type(self):
+    def body_type_menu(self):
         print("Please select what body-type you want:\n")
         body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Exit Menu"]
         terminal_menu = TerminalMenu(body_type_options)
         menu_entry_index = terminal_menu.show()
-        print(f"You have selected {body_type_options[menu_entry_index]}!\n")
         while menu_entry_index != 3:
+            print(f"You have selected {body_type_options[menu_entry_index]}!\n")
             if menu_entry_index == 0:
                 self.player_one.set_body_type("Tracked")
                 break
@@ -116,3 +118,5 @@ class Game():
                 self.player_one.set_body_type("Hard-Wheeled")
                 break
             menu_entry_index = terminal_menu.show()
+        self.clear_terminal()
+        print(f"You have selected {body_type_options[menu_entry_index]}!\n")
