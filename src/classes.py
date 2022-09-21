@@ -1,16 +1,16 @@
+from os import name, system
 from random import choice
-from os import system, name
 from time import sleep
 from simple_term_menu import TerminalMenu
 
 # Player Class for inidividual human players
 
 class Player():
-    def __init__(self, name = "undefined", health = 200, body_type = "undefined", arm_weapon = "undefined"):
+    def __init__(self, name = "undefined", health = 200, body_type = "undefined", weapon = "undefined"):
         self.__name = name
         self.__health = health
         self.__body_type = body_type
-        self.__arm_weapon = arm_weapon
+        self.__weapon = weapon
 
     # Currently using
     def get_name(self):
@@ -18,22 +18,24 @@ class Player():
 
     def get_health(self):
         return self.__health
-
+    # Currently using
     def get_body_type(self):
         return self.__body_type
-
-    def get_arm_weapon(self):
-        return self.__arm_weapon    
+    # Currently using
+    def get_weapon(self):
+        return self.__weapon    
     # Currently using
     def set_name(self, name):
         self.__name = name
     # Currently using
     def set_body_type(self, body_type):
         self.__body_type = body_type
+    # Currently using
+    def set_weapon(self, weapon):
+        self.__weapon = weapon
 
-    def set_arm_weapon(self, arm_weapon):
-        self.__arm_weapon = arm_weapon
-
+    def damage_health(self, health):
+        self.__health -= health
 
 # Child Class of the Player Class for AI specifics
 
@@ -47,15 +49,15 @@ class ComputerPlayer(Player):
     bot_body_type = ["Tracked", "Soft-Wheeled", "Hard-Wheeled"]
 
     # Random Arm weapon for AI player
-    bot_arm_weapon = ["Electrocutor", "Powersaw", "Flipper"]
+    bot_weapon = ["Electrocutor", "Powersaw", "Flipper"]
 
     def __init__(self):
         self.__name = choice(ComputerPlayer.bot_names)
         self.__body_type = choice(ComputerPlayer.bot_body_type)
-        self.__arm_weapon = choice(ComputerPlayer.bot_arm_weapon)
+        self.__weapon = choice(ComputerPlayer.bot_weapon)
         self.__health = 100
-        # Had to declare all parameters as body type and arm_weapon were positional
-        super().__init__(self.__name, self.__health, self.__body_type, self.__arm_weapon)
+        # Had to declare all parameters as body type and weapon were positional
+        super().__init__(self.__name, self.__health, self.__body_type, self.__weapon)
 
 
 
@@ -89,8 +91,7 @@ class Game():
             print(f"You have selected {options[menu_entry_index]}!\n")
             if menu_entry_index == 0:
                 self.single_player_mode()
-                self.body_type_menu()
-                self.arm_weapon_menu()
+
             elif menu_entry_index == 1:
                 pass
                 # DO TIME PERMITTING
@@ -98,6 +99,7 @@ class Game():
             menu_entry_index = terminal_menu.show()
             self.clear_terminal()
         print(f"You have selected {options[menu_entry_index]}!\n")
+
     def battle(self):
         pass
 
@@ -112,7 +114,9 @@ class Game():
         print("...initializing...")
         sleep(4)
         self.clear_terminal()
-
+        self.body_type_menu()
+        self.weapon_menu()
+        self.bot_menu()
 
     def body_type_menu(self):
         print("Select what body-type you want:\n")
@@ -131,36 +135,40 @@ class Game():
                 self.player_one.set_body_type("Hard-Wheeled")
                 break
             menu_entry_index = terminal_menu.show()
-        if isinstance(self.player_two, ComputerPlayer):
-            print(f"{self.player_two.get_name()} has selected: {self.player_two.get_body_type()}")
-            sleep(2)
-        else:
-            print("nope")
         self.clear_terminal()
         print(f"You have selected {body_type_options[menu_entry_index]}!\n")
 
 
-    def arm_weapon_menu(self):
-        print("Select what arm-weapon you want to punish your opponent with!:\n")
-        arm_weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Exit Menu"]
-        terminal_menu = TerminalMenu(arm_weapon_options)
+    def weapon_menu(self):
+        print("Select what weapon you want to punish your opponent with!\n")
+        weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Exit Menu"]
+        terminal_menu = TerminalMenu(weapon_options)
         menu_entry_index = terminal_menu.show()
         while menu_entry_index != 3:
-            print(f"You have selected {arm_weapon_options[menu_entry_index]}!\n")
+            print(f"You have selected {weapon_options[menu_entry_index]}!\n")
             if menu_entry_index == 0:
-                self.player_one.set_arm_weapon("Electrocutor")
+                self.player_one.set_weapon("Electrocutor")
                 break
             elif menu_entry_index == 1:
-                self.player_one.set_arm_weapon("Powersaw")
+                self.player_one.set_weapon("Powersaw")
                 break
             elif menu_entry_index == 2:
-                self.player_one.set_arm_weapon("Flipper")
+                self.player_one.set_weapon("Flipper")
                 break
             menu_entry_index = terminal_menu.show()
-        if isinstance(self.player_two, ComputerPlayer):
-            print(f"{self.player_two.get_name()} has selected: {self.player_two.get_arm_weapon()}")
-            sleep(2)
-        else:
-            print("nope")
         self.clear_terminal()
-        print(f"You have selected {arm_weapon_options[menu_entry_index]}!\n")
+        print(f"You have selected {weapon_options[menu_entry_index]}!\n")
+
+    def bot_menu(self):
+        if isinstance(self.player_two, ComputerPlayer):
+            print(f"{self.player_two.get_name()} is thinking....\n")
+            sleep(2)
+            print(f"{self.player_two.get_name()} has selected body type: {self.player_two.get_body_type()}\n")
+            print(f"{self.player_two.get_name()} has selected weapon: {self.player_two.get_weapon()}\n")
+            print("...initializing...")
+            sleep(8)
+            self.clear_terminal()
+            
+
+
+        # if isinstance(self.player_two, ComputerPlayer):
