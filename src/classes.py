@@ -39,11 +39,20 @@ class ComputerPlayer(Player):
     # Random names for AI player
     bot_names = ["Terminator", "Annihilator", "Destroyer", "Crusher", "Nuts-n-Bolts", "Link",
     "Mechanicus", "Ripper", "Tank", "Shredder"]
-    # Added private variable name here to prevent potential access to this random name variable
+
+    # Random Body type for AI player
+    bot_body_type = ["Tracked", "Soft-Wheeled", "Hard-Wheeled"]
+
+    # Random Arm weapon for AI player
+    bot_arm_weapon = ["Electrocutor", "Powersaw", "Flipper"]
 
     def __init__(self):
         self.__name = choice(ComputerPlayer.bot_names)
-        super().__init__(self.__name)
+        self.__body_type = choice(ComputerPlayer.bot_body_type)
+        self.__arm_weapon = choice(ComputerPlayer.bot_arm_weapon)
+        self.__health = 100
+        # Had to declare all parameters as body type and arm_weapon were positional
+        super().__init__(self.__name, self.__health, self.__body_type, self.__arm_weapon)
 
 
 
@@ -118,5 +127,10 @@ class Game():
                 self.player_one.set_body_type("Hard-Wheeled")
                 break
             menu_entry_index = terminal_menu.show()
+        if isinstance(self.player_two, ComputerPlayer):
+            print(f"{self.player_two.get_name()} has selected: {self.player_two.get_body_type()}")
+            sleep(2)
+        else:
+            print("nope")
         self.clear_terminal()
         print(f"You have selected {body_type_options[menu_entry_index]}!\n")
