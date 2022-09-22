@@ -88,13 +88,14 @@ class Game():
         menu_entry_index = terminal_menu.show()
         while menu_entry_index != 2:
             print(f"You have selected {options[menu_entry_index]}!\n")
+            sleep(1)
+            self.clear_terminal()
             if menu_entry_index == 0:
-                self.single_player_mode()
+                self.single_player()
 
             elif menu_entry_index == 1:
-                pass
-                # DO TIME PERMITTING
-                # self.multi_player_mode()
+                self.multi_player()
+
             menu_entry_index = terminal_menu.show()
             self.clear_terminal()
         print(f"You have selected {options[menu_entry_index]}!\n")
@@ -103,7 +104,7 @@ class Game():
 
     
     # ERORR HANDLE (if escape pushed) TypeError: list indices must be integers or slices, not NoneType
-    def single_player_mode(self):
+    def single_player(self):
         # ERORR HANDLE INPUT HERE FOR INTS/FLOAT EMPTIES NONE TYPE ETC
         self.player_one = Player()
         player_one_name = input("What's you're Battle Robots Name ? ")
@@ -114,68 +115,107 @@ class Game():
         print("...initializing...")
         sleep(4)
         self.clear_terminal()
-        self.body_type_menu()
+        self.body_type_menu(self.player_one, self.player_two)
 
-
-    def body_type_menu(self):
-        print("Select what Body Type you want:\n")
-        body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Main Menu"]
-        terminal_menu = TerminalMenu(body_type_options)
-        menu_entry_index = terminal_menu.show()
-        while menu_entry_index != 3:
-            print(f"You have selected {body_type_options[menu_entry_index]}!\n")
-            if menu_entry_index == 0:
-                self.player_one.set_body_type("Tracked")
-                self.weapon_menu()
-                break
-            elif menu_entry_index == 1:
-                self.player_one.set_body_type("Soft-Wheeled")
-                self.weapon_menu()
-                break
-            elif menu_entry_index == 2:
-                self.player_one.set_body_type("Hard-Wheeled")
-                self.weapon_menu()
-                break
-            menu_entry_index = terminal_menu.show()
-        print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+    def multi_player(self):
+        self.player_one = Player()
+        player_one_name = input("Player One: What's you're Battle Robots Name ? ")
+        self.player_one.set_name(player_one_name.capitalize())
         self.clear_terminal()
-
-
-
-    def weapon_menu(self):
-        print("Select what Weapon you want to punish your opponent with!\n")
-        weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Main Menu"]
-        terminal_menu = TerminalMenu(weapon_options)
-        menu_entry_index = terminal_menu.show()
-        while menu_entry_index != 3:
-            print(f"You have selected {weapon_options[menu_entry_index]}!\n")
-            if menu_entry_index == 0:
-                self.player_one.set_weapon("Electrocutor")
-                self.bot_select()
-                self.battle_load_screen()
-                break
-            elif menu_entry_index == 1:
-                self.player_one.set_weapon("Powersaw")
-                self.bot_select()
-                self.battle_load_screen()
-                break
-            elif menu_entry_index == 2:
-                self.player_one.set_weapon("Flipper")
-                self.bot_select()
-                self.battle_load_screen()
-                break
-            menu_entry_index = terminal_menu.show()
+        self.player_two = Player()
+        player_two_name = input("Player Two: What's you're Battle Robots Name ? ")
+        self.player_two.set_name(player_two_name.capitalize())
         self.clear_terminal()
-        print(f"You have selected {weapon_options[menu_entry_index]}!\n")
+        self.body_type_menu(self.player_one, self.player_two)        
+
+
+
+
+
+
+
+
+
+    def body_type_menu(self, player_one, player_two):
+        players = [player_one, player_two]
+        exit_flag = False
+        for char in players:
+            if isinstance(char, ComputerPlayer):
+                self.weapon_menu(player_one, player_two)
+            else:
+                print(f"{char.get_name()}: What Body-Type do you want ? \n")
+                body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Main Menu"]
+                terminal_menu = TerminalMenu(body_type_options)
+                menu_entry_index = terminal_menu.show()
+                while menu_entry_index != 3:
+                    print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+                    if menu_entry_index == 0:
+                        char.set_body_type("Tracked")
+                    elif menu_entry_index == 1:
+                        char.set_body_type("Soft-Wheeled")
+                    elif menu_entry_index == 2:
+                        char.set_body_type("Hard-Wheeled")
+                    sleep(2)
+                    self.clear_terminal()
+                    break
+                if menu_entry_index == 3:
+                    exit_flag = True
+                    self.clear_terminal()
+                    print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+                    sleep(1)
+            if exit_flag:
+                self.clear_terminal()
+                break
+        if exit_flag is False:
+            self.weapon_menu(player_one, player_two)
+            # else:
+            #         print(f"{self.player_two.get_name()}: Select what Body Type you want:\n")
+            #     break
+
+
+
+
+    def weapon_menu(self, player_one, player_two):
+        players = [player_one, player_two]
+        exit_flag = False
+        for char in players:
+            if isinstance(char, ComputerPlayer):
+                self.bot_select()
+            else:
+                print(f"{char.get_name()}: What Weapon do you want to punish your opponent with!\n")
+                weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Main Menu"]
+                terminal_menu = TerminalMenu(weapon_options)
+                menu_entry_index = terminal_menu.show()
+                while menu_entry_index != 3:
+                    print(f"You have selected {weapon_options[menu_entry_index]}!\n")
+                    if menu_entry_index == 0:
+                        char.set_weapon("Electrocutor")                       
+                    elif menu_entry_index == 1:
+                        char.set_weapon("Powersaw")
+                    elif menu_entry_index == 2:
+                        char.set_weapon("Flipper")
+                    sleep(2)
+                    self.clear_terminal()
+                    break
+                if menu_entry_index == 3:
+                    exit_flag = True
+                    self.clear_terminal()
+                    print(f"You have selected {weapon_options[menu_entry_index]}!\n")
+                    sleep(1)
+            if exit_flag:
+                self.clear_terminal()
+                break
+        if exit_flag is False:
+            self.battle_load_screen()
+        # print(f"You have selected {weapon_options[menu_entry_index]}!\n")
 
     def bot_select(self):
-        if isinstance(self.player_two, ComputerPlayer):
             print(f"{self.player_two.get_name()} is thinking....\n")
             sleep(2)
             print(f"{self.player_two.get_name()} has selected Body Type: {self.player_two.get_body_type()}\n")
             print(f"{self.player_two.get_name()} has selected Weapon: {self.player_two.get_weapon()}\n")
             print("...initializing...")
-            sleep(6)
+            sleep(3)
             self.clear_terminal()
     
     def battle_load_screen(self):
@@ -204,7 +244,7 @@ class Game():
                 self.attack_first_flag = True
                 break
         print("...initializing...\n")
-        sleep(5)
+        sleep(4)
         self.clear_terminal()        
         # Flag variable called in game object that determines who goes first based on roll above
         # Battle method called in here
@@ -230,19 +270,21 @@ class Game():
                 bot_entry_index = choice(attack_options)
                 sleep(2)
                 print(f"{first.get_name()} is thinking....\n")
-                sleep(5)
+                sleep(2)
                 if bot_entry_index == attack_options[0]:
                     print(f"{first.get_name()} has selected Weapon: {first.get_weapon()}\n")
-                    sleep(5)
+                    sleep(2)
                 elif bot_entry_index == attack_options[1]:
                     print(f"{first.get_name()} has selected Body Type: {first.get_body_type()}\n")
-                    sleep(5)
+                    sleep(2)
             # Human player menu
             else:
                 terminal_menu = TerminalMenu(attack_options)
                 menu_entry_index = terminal_menu.show()
                 print(f"You have selected {attack_options[menu_entry_index]}\n")
             # Damage calculator
+            # Weapon always attacks
+            # Dmg calculator for Weapon attacking Weapon
             if menu_entry_index == 0 or bot_entry_index == attack_options[0]:
                 if first.get_weapon() == "Electrocutor":
                     if second.get_weapon() == "Electrocutor":
@@ -274,6 +316,7 @@ class Game():
                     if second.get_weapon() == "Flipper":
                         second.damage(10)
                         damage_taken = 10
+            # Dmg calculator for Weapon attacking Body
             elif menu_entry_index == 1 or bot_entry_index == attack_options[1]:
                 if first.get_weapon() == "Electrocutor":
                     if second.get_body_type() == "Tracked":
@@ -316,9 +359,5 @@ class Game():
             print(f"\n{self.player_two.get_name()} Wins!")
         sleep(3)
 
-
-    # def bot_attack(self):
-    #     rand_attack = [self.player_one.get_weapon(), self.player_one.get_body_type()]
-    #     bot_attack_choice = choice(rand_attack)
 
 
