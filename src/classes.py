@@ -1,5 +1,5 @@
 from os import name, system
-from random import choice
+from random import choice, randint
 from time import sleep
 from simple_term_menu import TerminalMenu
 
@@ -70,6 +70,7 @@ class Game():
     def __init__(self):
         self.player_one = ""
         self.player_two = ""
+        self.attack_first_flag = False
 
     # DO TIME PERMITTING
     def introduction(self):
@@ -100,14 +101,15 @@ class Game():
             self.clear_terminal()
         print(f"You have selected {options[menu_entry_index]}!\n")
 
-    def battle(self):
-        pass
 
+
+    
     # ERORR HANDLE (if escape pushed) TypeError: list indices must be integers or slices, not NoneType
     def single_player_mode(self):
-        # ERORR HANDLE INPUT HERE
+        # ERORR HANDLE INPUT HERE FOR INTS/FLOAT EMPTIES NONE TYPE ETC
         self.player_one = Player()
-        self.player_one.set_name(input("What's you're Battle Robots Name ? "))
+        player_one_name = input("What's you're Battle Robots Name ? ")
+        self.player_one.set_name(player_one_name.capitalize())
         print(f"\n Welcome, {self.player_one.get_name()}")
         self.player_two = ComputerPlayer()
         print(f"\n You're Battling: {self.player_two.get_name()}!\n")
@@ -115,13 +117,7 @@ class Game():
         sleep(4)
         self.clear_terminal()
         self.body_type_menu()
-        print(self.player_one.get_name())
-        print(self.player_one.get_body_type())
-        print(self.player_one.get_weapon())
-        print(self.player_two.get_name())
-        print(self.player_two.get_body_type())
-        print(self.player_two.get_weapon())
-        sleep(8)
+
 
     def body_type_menu(self):
         print("Select what Body Type you want:\n")
@@ -158,14 +154,17 @@ class Game():
             if menu_entry_index == 0:
                 self.player_one.set_weapon("Electrocutor")
                 self.bot_select()
+                self.battle_load_screen()
                 break
             elif menu_entry_index == 1:
                 self.player_one.set_weapon("Powersaw")
                 self.bot_select()
+                self.battle_load_screen()
                 break
             elif menu_entry_index == 2:
                 self.player_one.set_weapon("Flipper")
                 self.bot_select()
+                self.battle_load_screen()
                 break
             menu_entry_index = terminal_menu.show()
         self.clear_terminal()
@@ -180,7 +179,33 @@ class Game():
             print("...initializing...")
             sleep(6)
             self.clear_terminal()
-            
+    
 
+    def battle_load_screen(self):
+        print(f"Player One: {self.player_one.get_name()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
+        print("VERSUS!\n")
+        print(f"Player Two: {self.player_two.get_name()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
+        print("...initializing...\n")
+        sleep(6)
+        self.clear_terminal()
+        print("Roll for who attacks first!\n")
+        player_one_roll = 0
+        player_two_roll = 0
+        while player_one_roll == player_two_roll:
+            player_one_roll = randint(1, 6)
+            print(f"{self.player_one.get_name()} rolls: {player_one_roll}\n")
+            player_two_roll = randint(1, 6)
+            print(f"{self.player_two.get_name()} rolls: {player_two_roll}\n")
+            if player_one_roll == player_two_roll:
+                print("Same number, roll again!\n")
+                continue
+            elif player_one_roll > player_two_roll:
+                print(f"{self.player_one.get_name()} attacks first!")
+                break
+            elif player_two_roll > player_one_roll:
+                print(f"{self.player_two.get_name()} attacks first!")
+                self.attack_first_flag = True
+                break
+        sleep(4)
 
-        # if isinstance(self.player_two, ComputerPlayer):
+        def battle()
