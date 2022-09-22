@@ -183,7 +183,7 @@ class Game():
         print("VERSUS!\n")
         print(f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
         print("...initializing...\n")
-        sleep(6)
+        sleep(4)
         self.clear_terminal()
         print("Roll for who attacks first!\n")
         player_one_roll = 0
@@ -204,7 +204,7 @@ class Game():
                 self.attack_first_flag = True
                 break
         print("...initializing...\n")
-        sleep(4)
+        sleep(5)
         self.clear_terminal()        
         # Flag variable called in game object that determines who goes first based on roll above
         # Battle method called in here
@@ -214,17 +214,36 @@ class Game():
             self.battle(self.player_one, self.player_two)
         # self.player_two
 
-    def battle(self, first, second):          
-
+    def battle(self, first, second):   
+        # Declared menu variable here to prevent assignment errors later (required two menus one for bot and one for players)
+        menu_entry_index = True
+        bot_entry_index = True
         while self.player_one.get_health() > 0 and self.player_two.get_health() > 0:
             print(f"Player One: {self.player_one.get_name()}, Health: {self.player_one.get_health()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
             print(f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
+            # if isinstance(first, ComputerPlayer):
+            #     self.bot_attack()
             print("Where do you want to attack your opponent, " f"{first.get_name()}!\n")
             attack_options = [f"{second.get_name()} Weapon: {second.get_weapon()} ", f"{second.get_name()} Body: {second.get_body_type()} "]
-            terminal_menu = TerminalMenu(attack_options)
-            menu_entry_index = terminal_menu.show()
-            print(f"You have selected {attack_options[menu_entry_index]}\n")
-            if menu_entry_index == 0:
+            # Bot specific attack
+            if isinstance(first, ComputerPlayer):
+                bot_entry_index = choice(attack_options)
+                sleep(2)
+                print(f"{first.get_name()} is thinking....\n")
+                sleep(5)
+                if bot_entry_index == attack_options[0]:
+                    print(f"{first.get_name()} has selected Weapon: {first.get_weapon()}\n")
+                    sleep(5)
+                elif bot_entry_index == attack_options[1]:
+                    print(f"{first.get_name()} has selected Body Type: {first.get_body_type()}\n")
+                    sleep(5)
+            # Human player menu
+            else:
+                terminal_menu = TerminalMenu(attack_options)
+                menu_entry_index = terminal_menu.show()
+                print(f"You have selected {attack_options[menu_entry_index]}\n")
+            # Damage calculator
+            if menu_entry_index == 0 or bot_entry_index == attack_options[0]:
                 if first.get_weapon() == "Electrocutor":
                     if second.get_weapon() == "Electrocutor":
                         second.damage(10)
@@ -255,7 +274,7 @@ class Game():
                     if second.get_weapon() == "Flipper":
                         second.damage(10)
                         damage_taken = 10
-            elif menu_entry_index == 1:
+            elif menu_entry_index == 1 or bot_entry_index == attack_options[1]:
                 if first.get_weapon() == "Electrocutor":
                     if second.get_body_type() == "Tracked":
                         second.damage(30)
@@ -291,3 +310,15 @@ class Game():
             sleep(2)
             self.clear_terminal()
             first, second = second, first
+        if self.player_one.get_health() > 0:
+            print(f"\n{self.player_one.get_name()} Wins!")
+        else:
+            print(f"\n{self.player_two.get_name()} Wins!")
+        sleep(3)
+
+
+    # def bot_attack(self):
+    #     rand_attack = [self.player_one.get_weapon(), self.player_one.get_body_type()]
+    #     bot_attack_choice = choice(rand_attack)
+
+
