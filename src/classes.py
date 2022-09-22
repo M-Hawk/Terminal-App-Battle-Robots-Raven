@@ -34,7 +34,7 @@ class Player():
     def set_weapon(self, weapon):
         self.__weapon = weapon
 
-    def damage_health(self, health):
+    def damage(self, health):
         self.__health -= health
 
 # Child Class of the Player Class for AI specifics
@@ -55,7 +55,7 @@ class ComputerPlayer(Player):
         self.__name = choice(ComputerPlayer.bot_names)
         self.__body_type = choice(ComputerPlayer.bot_body_type)
         self.__weapon = choice(ComputerPlayer.bot_weapon)
-        self.__health = 100
+        self.__health = 200
         # Had to declare all parameters as body type and weapon were positional
         super().__init__(self.__name, self.__health, self.__body_type, self.__weapon)
 
@@ -64,8 +64,6 @@ class ComputerPlayer(Player):
 
 
 class Game():
-    # Flag var used in gamemodes to exit game CURRENTLY DON'T NEED
-    flag = False
     # Initilizes a main player and second player (either human or computer)
     def __init__(self):
         self.player_one = ""
@@ -180,11 +178,10 @@ class Game():
             sleep(6)
             self.clear_terminal()
     
-
     def battle_load_screen(self):
-        print(f"Player One: {self.player_one.get_name()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
+        print(f"Player One: {self.player_one.get_name()}, Health: {self.player_one.get_health()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
         print("VERSUS!\n")
-        print(f"Player Two: {self.player_two.get_name()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
+        print(f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
         print("...initializing...\n")
         sleep(6)
         self.clear_terminal()
@@ -200,12 +197,97 @@ class Game():
                 print("Same number, roll again!\n")
                 continue
             elif player_one_roll > player_two_roll:
-                print(f"{self.player_one.get_name()} attacks first!")
+                print(f"{self.player_one.get_name()} attacks first!\n")
                 break
             elif player_two_roll > player_one_roll:
-                print(f"{self.player_two.get_name()} attacks first!")
+                print(f"{self.player_two.get_name()} attacks first!\n")
                 self.attack_first_flag = True
                 break
+        print("...initializing...\n")
         sleep(4)
+        self.clear_terminal()        
+        # Flag variable called in game object that determines who goes first based on roll above
+        # Battle method called in here
+        if self.attack_first_flag:
+            self.battle(self.player_two, self.player_one)
+        elif self.attack_first_flag is False:
+            self.battle(self.player_one, self.player_two)
+        # self.player_two
 
-        def battle()
+    def battle(self, first, second):          
+
+        while self.player_one.get_health() > 0 and self.player_two.get_health() > 0:
+            print(f"Player One: {self.player_one.get_name()}, Health: {self.player_one.get_health()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
+            print(f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
+            print("Where do you want to attack your opponent, " f"{first.get_name()}!\n")
+            attack_options = [f"{second.get_name()} Weapon: {second.get_weapon()} ", f"{second.get_name()} Body: {second.get_body_type()} "]
+            terminal_menu = TerminalMenu(attack_options)
+            menu_entry_index = terminal_menu.show()
+            print(f"You have selected {attack_options[menu_entry_index]}\n")
+            if menu_entry_index == 0:
+                if first.get_weapon() == "Electrocutor":
+                    if second.get_weapon() == "Electrocutor":
+                        second.damage(10)
+                        damage_taken = 10
+                    if second.get_weapon() == "Powersaw":
+                        second.damage(20)
+                        damage_taken = 20
+                    if second.get_weapon() == "Flipper":
+                        second.damage(30)
+                        damage_taken = 30
+                if first.get_weapon() == "Powersaw":
+                    if second.get_weapon() == "Electrocutor":
+                        second.damage(30)
+                        damage_taken = 30
+                    if second.get_weapon() == "Powersaw":
+                        second.damage(10)
+                        damage_taken = 10
+                    if second.get_weapon() == "Flipper":
+                        second.damage(20)
+                        damage_taken = 20
+                if first.get_weapon() == "Flipper":
+                    if second.get_weapon() == "Electrocutor":
+                        second.damage(20)
+                        damage_taken = 20
+                    if second.get_weapon() == "Powersaw":
+                        second.damage(30)
+                        damage_taken = 30
+                    if second.get_weapon() == "Flipper":
+                        second.damage(10)
+                        damage_taken = 10
+            elif menu_entry_index == 1:
+                if first.get_weapon() == "Electrocutor":
+                    if second.get_body_type() == "Tracked":
+                        second.damage(30)
+                        damage_taken = 30
+                    if second.get_body_type() == "Soft-Wheeled":
+                        second.damage(10)
+                        damage_taken = 10
+                    if second.get_body_type() == "Hard-Wheeled":
+                        second.damage(20)
+                        damage_taken = 20
+                if first.get_weapon() == "Powersaw":
+                    if second.get_body_type() == "Tracked":
+                        second.damage(20)
+                        damage_taken = 20
+                    if second.get_body_type() == "Soft-Wheeled":
+                        second.damage(30)
+                        damage_taken = 20
+                    if second.get_body_type() == "Hard-Wheeled":
+                        second.damage(10)
+                        damage_taken = 10
+                if first.get_weapon() == "Flipper":
+                    if second.get_body_type() == "Tracked":
+                        second.damage(10)
+                        damage_taken = 10
+                    if second.get_body_type() == "Soft-Wheeled":
+                        second.damage(20)
+                        damage_taken = 20
+                    if second.get_body_type() == "Hard-Wheeled":
+                        second.damage(30)
+                        damage_taken = 30 
+            print(f"{second.get_name()} takes {damage_taken} damage!\n")
+            # menu_entry_index = terminal_menu.show()
+            sleep(2)
+            self.clear_terminal()
+            first, second = second, first
