@@ -115,58 +115,70 @@ class Game():
         sleep(4)
         self.clear_terminal()
         self.body_type_menu()
-        self.weapon_menu()
-        self.bot_menu()
+        print(self.player_one.get_name())
+        print(self.player_one.get_body_type())
+        print(self.player_one.get_weapon())
+        print(self.player_two.get_name())
+        print(self.player_two.get_body_type())
+        print(self.player_two.get_weapon())
+        sleep(8)
 
     def body_type_menu(self):
-        print("Select what body-type you want:\n")
-        body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Exit Menu"]
+        print("Select what Body Type you want:\n")
+        body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Main Menu"]
         terminal_menu = TerminalMenu(body_type_options)
         menu_entry_index = terminal_menu.show()
         while menu_entry_index != 3:
             print(f"You have selected {body_type_options[menu_entry_index]}!\n")
             if menu_entry_index == 0:
                 self.player_one.set_body_type("Tracked")
+                self.weapon_menu()
                 break
             elif menu_entry_index == 1:
                 self.player_one.set_body_type("Soft-Wheeled")
+                self.weapon_menu()
                 break
             elif menu_entry_index == 2:
                 self.player_one.set_body_type("Hard-Wheeled")
+                self.weapon_menu()
                 break
             menu_entry_index = terminal_menu.show()
-        self.clear_terminal()
         print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+        self.clear_terminal()
+
 
 
     def weapon_menu(self):
-        print("Select what weapon you want to punish your opponent with!\n")
-        weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Exit Menu"]
+        print("Select what Weapon you want to punish your opponent with!\n")
+        weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Main Menu"]
         terminal_menu = TerminalMenu(weapon_options)
         menu_entry_index = terminal_menu.show()
         while menu_entry_index != 3:
             print(f"You have selected {weapon_options[menu_entry_index]}!\n")
             if menu_entry_index == 0:
                 self.player_one.set_weapon("Electrocutor")
+                self.bot_select()
                 break
             elif menu_entry_index == 1:
                 self.player_one.set_weapon("Powersaw")
+                self.bot_select()
                 break
             elif menu_entry_index == 2:
                 self.player_one.set_weapon("Flipper")
+                self.bot_select()
                 break
             menu_entry_index = terminal_menu.show()
         self.clear_terminal()
         print(f"You have selected {weapon_options[menu_entry_index]}!\n")
 
-    def bot_menu(self):
+    def bot_select(self):
         if isinstance(self.player_two, ComputerPlayer):
             print(f"{self.player_two.get_name()} is thinking....\n")
             sleep(2)
-            print(f"{self.player_two.get_name()} has selected body type: {self.player_two.get_body_type()}\n")
-            print(f"{self.player_two.get_name()} has selected weapon: {self.player_two.get_weapon()}\n")
+            print(f"{self.player_two.get_name()} has selected Body Type: {self.player_two.get_body_type()}\n")
+            print(f"{self.player_two.get_name()} has selected Weapon: {self.player_two.get_weapon()}\n")
             print("...initializing...")
-            sleep(8)
+            sleep(6)
             self.clear_terminal()
             
 
