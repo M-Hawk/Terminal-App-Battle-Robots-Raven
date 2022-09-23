@@ -94,17 +94,13 @@ class Game():
             if menu_entry_index == 0:
                 self.single_player()
                 self.game_exit_flag = False
-                # FIX MENU DOUBLE EXIT AFTER GAME ENDS
             elif menu_entry_index == 1:
                 self.multi_player()
                 self.game_exit_flag = False
-            menu_entry_index = terminal_menu.show()
             self.clear_terminal()
+            menu_entry_index = terminal_menu.show()
         print(f"You have selected {options[menu_entry_index]}!\n")
 
-
-
-    
     # ERORR HANDLE (if escape pushed) TypeError: list indices must be integers or slices, not NoneType
     def single_player(self):
         # ERORR HANDLE INPUT HERE FOR INTS/FLOAT EMPTIES NONE TYPE ETC
