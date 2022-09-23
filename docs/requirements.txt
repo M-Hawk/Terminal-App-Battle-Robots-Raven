@@ -6,3 +6,4 @@ Random
 Time
 OS
 Simple Term Menu
+art 5.7    use pip install art==5.7
