@@ -1,3 +1,4 @@
+from art import *
 from os import name, system
 from random import choice, randint
 from time import sleep
@@ -93,10 +94,13 @@ class Game():
 
     # DO TIME PERMITTING
     def introduction(self):
-        ### Add cool ASCII Picture
-        ### Add ... initializing Battle Bots ... print message
+        self.clear_terminal()
+        print("... initializing Battle Robots ...\n")
+        sleep(2)
+        art = text2art("battlerobots", font='block-medium', chr_ignore=True)
+        print(art)
+        sleep(3)
         ### Add timer pause before menu opens
-        pass
 
     # Method that clears the terminal throughout the game so players don't have to scroll
     def clear_terminal(self):
@@ -408,17 +412,21 @@ class Game():
                     print(f"{player_attacked.get_name()} has driven into the Arena's {arena_choice}!\n")
                     print(f"{player_attacked.get_name()} takes {rand_attack_dmg} damage! ouch...\n")
                     player_attacked.damage(rand_attack_dmg)
-                    sleep(4)
+                    sleep(2)
             sleep(3)
             self.clear_terminal()
             first, second = second, first
         if self.player_one.get_health() > 0:
             print(f"\n{self.player_one.get_name()} has obliterated {self.player_two.get_name()} in the Arena!\n")
-            print(f"\n{self.player_one.get_name()} Wins!")
+            print(f"\n{self.player_one.get_name()} Wins!\n")
+            art = text2art("\nbattlerobots", font='block-medium', chr_ignore=True)
+            print(art)
         else:
             print(f"\n{self.player_two.get_name()} has obliterated {self.player_one.get_name()} in the Arena!\n")
-            print(f"\n{self.player_two.get_name()} Wins!")
-        sleep(3)
+            print(f"\n{self.player_two.get_name()} Wins!\n")
+            art = text2art("\nbattlerobots", font='block-medium', chr_ignore=True)
+            print(art)
+        sleep(4)
         self.game_exit_flag = True
         self.clear_terminal()
 
