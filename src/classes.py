@@ -217,7 +217,7 @@ class Game():
             print(f"{self.player_two.get_name()} has selected Body Type: {self.player_two.get_body_type()}\n")
             print(f"{self.player_two.get_name()} has selected Weapon: {self.player_two.get_weapon()}\n")
             print("...initializing...")
-            sleep(3)
+            sleep(4)
             self.clear_terminal()
     
     def battle_load_screen(self):
@@ -246,7 +246,7 @@ class Game():
                 self.attack_first_flag = True
                 break
         print("...initializing...\n")
-        sleep(4)
+        sleep(5)
         self.clear_terminal()        
         # Flag variable called in game object that determines who goes first based on roll above
         # Battle method called in here
@@ -273,11 +273,11 @@ class Game():
             print("Where do you want to attack your opponent, " f"{first.get_name()}!\n")
             # List of attack options for players (only 2 when declared weapons and body type)
             attack_options = [f"{second.get_name()} Weapon: {second.get_weapon()} ", f"{second.get_name()} Body: {second.get_body_type()} "]
-            # Arena effects added here
+            # Arena effects added here, arena options declared outside if statement so they can be used later in random attack statement
+            arena_options = ["Powersaw", "Crushing Mallets", "Flame-Jets"]
+            arena_choice = choice(arena_options)
             if self.arena_effects_flag:
-                arena_options = ["Powersaw", "Crushing Mallets", "Flame-Jets"]
-                arena_choice = choice(arena_options)
-                # Add a 3rd attack option to list
+                # Adds a 3rd attack option to list
                 attack_options += [f"Attempt to push {second.get_name()} into {arena_choice}"]
             
             # Bot specific attack
@@ -285,16 +285,16 @@ class Game():
                 bot_entry_index = choice(attack_options)
                 sleep(2)
                 print(f"{first.get_name()} is thinking....\n")
-                sleep(2)
+                sleep(3)
                 if bot_entry_index == attack_options[0]:
                     print(f"{first.get_name()} has selected Weapon: {second.get_weapon()}\n")
-                    sleep(2)
+                    sleep(3)
                 elif bot_entry_index == attack_options[1]:
                     print(f"{first.get_name()} has selected Body Type: {second.get_body_type()}\n")
-                    sleep(2)
+                    sleep(3)
                 elif bot_entry_index == attack_options[2]:
-                    print(f"{first.get_name()} attempts to push {second.get_name()} into {arena_choice}")
-                    sleep(2)
+                    print(f"{first.get_name()} attempts to push {second.get_name()} into {arena_choice}\n")
+                    sleep(3)
             # Human player menu
             else:
                 terminal_menu = TerminalMenu(attack_options)
@@ -370,8 +370,23 @@ class Game():
                 damage_taken = randint(0, 40)
                 second.damage(damage_taken)
             print(f"{second.get_name()} takes {damage_taken} damage!\n")
+
+            # Random Arena damage
+            if self.arena_effects_flag:
+                player_chance = [first, second]
+                # random pick of players in game
+                player_attacked = choice(player_chance)
+                # random damage between 0 - 20
+                rand_attack_dmg = randint(0, 20)
+                random_chance = randint(0, 100)
+                # 25% chance of player taking damage
+                if random_chance < 25:
+                    arena_choice = choice(arena_options)
+                    print(f"{player_attacked.get_name()} has driven into the Arena's {arena_choice}!\n")
+                    print(f"{player_attacked.get_name()} takes {rand_attack_dmg} damage! ouch...\n")
+                    sleep(5)
             # menu_entry_index = terminal_menu.show()
-            sleep(2)
+            sleep(3)
             self.clear_terminal()
             first, second = second, first
         if self.player_one.get_health() > 0:
