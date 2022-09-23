@@ -105,6 +105,23 @@ class Game():
     def clear_terminal(self):
         system("cls" if name == "nt" else "clear")
 
+    # Calculate damage for weapon attacking weapon
+    def weap_weap_dmg(self, first, second):
+        if (first, second) in self.strong_against_weapon:
+            return 30
+        elif (first, second) in self.weak_against_weapon:
+            return 10
+        else:
+            return 20
+    # Calculate damage for weapon attacking body
+    def weap_body_dmg(self, first, second):
+        if (first, second) in self.strong_against_body:
+            return 30
+        elif (first, second) in self.weak_against_body:
+            return 10
+        else:
+            return 20
+
     def game_mode(self):
         self.clear_terminal()
         options = ["Single Player", "Multi Player", "Exit Game"]
@@ -135,6 +152,12 @@ class Game():
         self.player_one = Player()
         player_one_name = input("What's you're Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
+        while len(self.player_one.get_name()) == 0:
+            print("Cannot have a blank name..")
+            sleep(2)
+            self.clear_terminal()
+            player_one_name = input("Player One: What's you're Battle Robots Name ? ")
+            self.player_one.set_name(player_one_name.capitalize()) 
         print(f"\n Welcome, {self.player_one.get_name()}")
         self.player_two = ComputerPlayer()
         print(f"\n You're Battling: {self.player_two.get_name()}!\n")
@@ -145,14 +168,26 @@ class Game():
         self.body_type_menu(self.player_one, self.player_two)
 
     def multi_player(self):
-        # ERROR HANDLE IF BOTH PLAYERS HAVE SAME NAME
+
         self.player_one = Player()
         player_one_name = input("Player One: What's you're Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
         self.clear_terminal()
-        self.player_two = Player()
+        while len(self.player_one.get_name()) == 0:
+            print("Cannot have a blank name..")
+            sleep(2)
+            self.clear_terminal()
+            player_one_name = input("Player One: What's you're Battle Robots Name ? ")
+            self.player_one.set_name(player_one_name.capitalize())           
+        self.player_two = Player() 
         player_two_name = input("Player Two: What's you're Battle Robots Name ? ")
         self.player_two.set_name(player_two_name.capitalize())
+        while self.player_one.get_name() == self.player_two.get_name() or len(self.player_two.get_name()) == 0:
+            print("Both players cannot have the same name or blank names ")
+            sleep(2)
+            self.clear_terminal()
+            player_two_name = input("Player Two: What's you're Battle Robots Name ? ")
+            self.player_two.set_name(player_two_name.capitalize())
         self.clear_terminal()
         self.arena_effects()
         self.body_type_menu(self.player_one, self.player_two)        
@@ -289,22 +324,7 @@ class Game():
             self.battle(self.player_one, self.player_two)
         # self.player_two
 
-    # Calculate damage for weapon attacking weapon
-    def weap_weap_dmg(self, first, second):
-        if (first, second) in self.strong_against_weapon:
-            return 30
-        elif (first, second) in self.weak_against_weapon:
-            return 10
-        else:
-            return 20
-    # Calculate damage for weapon attacking body
-    def weap_body_dmg(self, first, second):
-        if (first, second) in self.strong_against_body:
-            return 30
-        elif (first, second) in self.weak_against_body:
-            return 10
-        else:
-            return 20
+
 
     def battle(self, first, second):
         # Declared menu variable here to prevent assignment errors later (required two menus one for bot and one for players)
@@ -323,7 +343,7 @@ class Game():
             arena_choice = choice(arena_options)
             if self.arena_effects_flag:
                 # Adds a 3rd attack option to list
-                attack_options += [f"Attempt to push {second.get_name()} into {arena_choice}"]
+                attack_options += [f"Attempt to push {second.get_name()} into the Arena's {arena_choice}"]
             
             # Bot specific attack
             if isinstance(first, ComputerPlayer):
