@@ -92,7 +92,7 @@ class Game():
             ("Flipper", "Tracked")
         }
 
-    # DO TIME PERMITTING
+    # Intro message method for Battle Robots
     def introduction(self):
         self.clear_terminal()
         print("... initializing Battle Robots ...\n")
@@ -100,7 +100,6 @@ class Game():
         art = text2art("battlerobots", font='block-medium', chr_ignore=True)
         print(art)
         sleep(3)
-        ### Add timer pause before menu opens
 
     # Method that clears the terminal throughout the game so players don't have to scroll
     def clear_terminal(self):
