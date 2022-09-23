@@ -88,17 +88,22 @@ class Game():
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
         while menu_entry_index != 2:
-            print(f"You have selected {options[menu_entry_index]}!\n")
-            sleep(1)
-            self.clear_terminal()
-            if menu_entry_index == 0:
-                self.single_player()
-                self.game_exit_flag = False
-            elif menu_entry_index == 1:
-                self.multi_player()
-                self.game_exit_flag = False
-            self.clear_terminal()
-            menu_entry_index = terminal_menu.show()
+            try:
+                print(f"You have selected {options[menu_entry_index]}!\n")
+                sleep(1)
+                self.clear_terminal()
+                if menu_entry_index == 0:
+                    self.single_player()
+                    self.game_exit_flag = False
+                elif menu_entry_index == 1:
+                    self.multi_player()
+                    self.game_exit_flag = False
+                self.clear_terminal()
+                menu_entry_index = terminal_menu.show()
+            except TypeError:
+                print ("Please select an option")
+                menu_entry_index = terminal_menu.show()
+                continue
         print(f"You have selected {options[menu_entry_index]}!\n")
 
     # ERORR HANDLE (if escape pushed) TypeError: list indices must be integers or slices, not NoneType
@@ -141,16 +146,21 @@ class Game():
                 terminal_menu = TerminalMenu(body_type_options)
                 menu_entry_index = terminal_menu.show()
                 while menu_entry_index != 3:
-                    print(f"You have selected {body_type_options[menu_entry_index]}!\n")
-                    if menu_entry_index == 0:
-                        char.set_body_type("Tracked")
-                    elif menu_entry_index == 1:
-                        char.set_body_type("Soft-Wheeled")
-                    elif menu_entry_index == 2:
-                        char.set_body_type("Hard-Wheeled")
-                    sleep(2)
-                    self.clear_terminal()
-                    break
+                    try:
+                        print(f"You have selected {body_type_options[menu_entry_index]}!\n")
+                        if menu_entry_index == 0:
+                            char.set_body_type("Tracked")
+                        elif menu_entry_index == 1:
+                            char.set_body_type("Soft-Wheeled")
+                        elif menu_entry_index == 2:
+                            char.set_body_type("Hard-Wheeled")
+                        sleep(2)
+                        self.clear_terminal()
+                        break
+                    except TypeError:
+                        print ("Please select an option")
+                        menu_entry_index = terminal_menu.show()
+                        continue
                 if menu_entry_index == 3:
                     exit_flag = True
                     self.clear_terminal()
@@ -182,16 +192,21 @@ class Game():
                 terminal_menu = TerminalMenu(weapon_options)
                 menu_entry_index = terminal_menu.show()
                 while menu_entry_index != 3:
-                    print(f"You have selected {weapon_options[menu_entry_index]}!\n")
-                    if menu_entry_index == 0:
-                        char.set_weapon("Electrocutor")                       
-                    elif menu_entry_index == 1:
-                        char.set_weapon("Powersaw")
-                    elif menu_entry_index == 2:
-                        char.set_weapon("Flipper")
-                    sleep(2)
-                    self.clear_terminal()
-                    break
+                    try:
+                        print(f"You have selected {weapon_options[menu_entry_index]}!\n")
+                        if menu_entry_index == 0:
+                            char.set_weapon("Electrocutor")                       
+                        elif menu_entry_index == 1:
+                            char.set_weapon("Powersaw")
+                        elif menu_entry_index == 2:
+                            char.set_weapon("Flipper")
+                        sleep(2)
+                        self.clear_terminal()
+                        break
+                    except TypeError:
+                        print ("Please select an option")
+                        menu_entry_index = terminal_menu.show()
+                        continue   
                 if menu_entry_index == 3:
                     exit_flag = True
                     self.clear_terminal()
@@ -406,6 +421,3 @@ class Game():
 
 # When a player wins it goes back to weapon select menu, maybe add a break statement after the call up there
 # Add random change to randint environmental damage each turn to each player
-
-game = Game()
-game.game_mode()
