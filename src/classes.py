@@ -70,6 +70,7 @@ class Game():
         self.player_two = ""
         self.attack_first_flag = False
         self.arena_effects_flag = False
+        self.game_exit_flag = False
     # DO TIME PERMITTING
     def introduction(self):
         ### Add cool ASCII Picture
@@ -92,10 +93,11 @@ class Game():
             self.clear_terminal()
             if menu_entry_index == 0:
                 self.single_player()
-
+                self.game_exit_flag = False
+                # FIX MENU DOUBLE EXIT AFTER GAME ENDS
             elif menu_entry_index == 1:
                 self.multi_player()
-
+                self.game_exit_flag = False
             menu_entry_index = terminal_menu.show()
             self.clear_terminal()
         print(f"You have selected {options[menu_entry_index]}!\n")
@@ -119,6 +121,7 @@ class Game():
         self.body_type_menu(self.player_one, self.player_two)
 
     def multi_player(self):
+        # ERROR HANDLE IF BOTH PLAYERS HAVE SAME NAME
         self.player_one = Player()
         player_one_name = input("Player One: What's you're Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
@@ -129,14 +132,6 @@ class Game():
         self.clear_terminal()
         self.arena_effects()
         self.body_type_menu(self.player_one, self.player_two)        
-
-
-
-
-
-
-
-
 
     def body_type_menu(self, player_one, player_two):
         players = [player_one, player_two]
@@ -165,10 +160,12 @@ class Game():
                     self.clear_terminal()
                     print(f"You have selected {body_type_options[menu_entry_index]}!\n")
                     sleep(1)
+            if self.game_exit_flag:
+                break
             if exit_flag:
                 self.clear_terminal()
                 break
-        if exit_flag is False:
+        if exit_flag is False and self.game_exit_flag is not True:
             self.weapon_menu(player_one, player_two)
             # else:
             #         print(f"{self.player_two.get_name()}: Select what Body Type you want:\n")
@@ -206,9 +203,11 @@ class Game():
                     sleep(1)
             if exit_flag:
                 self.clear_terminal()
+                self.game_exit_flag = True
                 break
         if exit_flag is False:
             self.battle_load_screen()
+            
         # print(f"You have selected {weapon_options[menu_entry_index]}!\n")
 
     def bot_select(self):
@@ -260,11 +259,6 @@ class Game():
         # Declared menu variable here to prevent assignment errors later (required two menus one for bot and one for players)
         menu_entry_index = True
         bot_entry_index = True
-
-
-
-
-    
         while self.player_one.get_health() > 0 and self.player_two.get_health() > 0:
             print(f"Player One: {self.player_one.get_name()}, Health: {self.player_one.get_health()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
             print(f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
@@ -283,18 +277,18 @@ class Game():
             # Bot specific attack
             if isinstance(first, ComputerPlayer):
                 bot_entry_index = choice(attack_options)
-                sleep(2)
+                # sleep(2)
                 print(f"{first.get_name()} is thinking....\n")
-                sleep(3)
+                # sleep(3)
                 if bot_entry_index == attack_options[0]:
                     print(f"{first.get_name()} has selected Weapon: {second.get_weapon()}\n")
-                    sleep(3)
+                    # sleep(3)
                 elif bot_entry_index == attack_options[1]:
                     print(f"{first.get_name()} has selected Body Type: {second.get_body_type()}\n")
-                    sleep(3)
+                    # sleep(3)
                 elif bot_entry_index == attack_options[2]:
                     print(f"{first.get_name()} attempts to push {second.get_name()} into {arena_choice}\n")
-                    sleep(3)
+                    # sleep(3)
             # Human player menu
             else:
                 terminal_menu = TerminalMenu(attack_options)
@@ -384,9 +378,9 @@ class Game():
                     arena_choice = choice(arena_options)
                     print(f"{player_attacked.get_name()} has driven into the Arena's {arena_choice}!\n")
                     print(f"{player_attacked.get_name()} takes {rand_attack_dmg} damage! ouch...\n")
-                    sleep(5)
+                    # sleep(5)
             # menu_entry_index = terminal_menu.show()
-            sleep(3)
+            # sleep(3)
             self.clear_terminal()
             first, second = second, first
         if self.player_one.get_health() > 0:
@@ -394,7 +388,8 @@ class Game():
         else:
             print(f"\n{self.player_two.get_name()} Wins!")
         sleep(3)
-
+        self.game_exit_flag = True
+        self.clear_terminal()
 
     def arena_effects(self):
         print("Do you want Arena Effects added to game ?\n")
@@ -415,3 +410,6 @@ class Game():
 
 # When a player wins it goes back to weapon select menu, maybe add a break statement after the call up there
 # Add random change to randint environmental damage each turn to each player
+
+game = Game()
+game.game_mode()
