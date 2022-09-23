@@ -71,6 +71,29 @@ class Game():
         self.attack_first_flag = False
         self.arena_effects_flag = False
         self.game_exit_flag = False
+        # Dmg calculator sets of tuples for calculating damage
+        self.strong_against_weapon = {
+            ("Electrocutor", "Flipper"),
+            ("Powersaw", "Electrocutor"),
+            ("Flipper", "Powersaw")
+        }
+        self.weak_against_weapon = {
+            ("Electrocutor", "Electrocutor"),
+            ("Powersaw", "Powersaw"),
+            ("Flipper", "Flipper")
+        }
+
+        self.strong_against_body = {
+            ("Electrocutor", "Tracked"),
+            ("Powersaw", "Soft-Wheeled"),
+            ("Flipper", "Hard-Wheeled")
+        }
+        self.weak_against_body = {
+            ("Electrocutor", "Soft-Wheeled"),
+            ("Powersaw", "Hard-Wheeled"),
+            ("Flipper", "Tracked")
+        }
+
     # DO TIME PERMITTING
     def introduction(self):
         ### Add cool ASCII Picture
@@ -266,7 +289,24 @@ class Game():
             self.battle(self.player_one, self.player_two)
         # self.player_two
 
-    def battle(self, first, second):   
+    # Calculate damage for weapon attacking weapon
+    def weap_weap_dmg(self, first, second):
+        if (first, second) in self.strong_against_weapon:
+            return 30
+        elif (first, second) in self.weak_against_weapon:
+            return 10
+        else:
+            return 20
+    # Calculate damage for weapon attacking body
+    def weap_body_dmg(self, first, second):
+        if (first, second) in self.strong_against_body:
+            return 30
+        elif (first, second) in self.weak_against_body:
+            return 10
+        else:
+            return 20
+
+    def battle(self, first, second):
         # Declared menu variable here to prevent assignment errors later (required two menus one for bot and one for players)
         menu_entry_index = True
         bot_entry_index = True
@@ -288,18 +328,18 @@ class Game():
             # Bot specific attack
             if isinstance(first, ComputerPlayer):
                 bot_entry_index = choice(attack_options)
-                # sleep(2)
+                sleep(2)
                 print(f"{first.get_name()} is thinking....\n")
-                # sleep(3)
+                sleep(3)
                 if bot_entry_index == attack_options[0]:
                     print(f"{first.get_name()} has selected Weapon: {second.get_weapon()}\n")
-                    # sleep(3)
+                    sleep(3)
                 elif bot_entry_index == attack_options[1]:
                     print(f"{first.get_name()} has selected Body Type: {second.get_body_type()}\n")
-                    # sleep(3)
+                    sleep(3)
                 elif bot_entry_index == attack_options[2]:
                     print(f"{first.get_name()} attempts to push {second.get_name()} into {arena_choice}\n")
-                    # sleep(3)
+                    sleep(3)
             # Human player menu
             else:
                 terminal_menu = TerminalMenu(attack_options)
@@ -309,68 +349,13 @@ class Game():
             # Weapon always attacks
             # Dmg calculator for Weapon attacking Weapon
             if menu_entry_index == 0 or bot_entry_index == attack_options[0]:
-                if first.get_weapon() == "Electrocutor":
-                    if second.get_weapon() == "Electrocutor":
-                        second.damage(10)
-                        damage_taken = 10
-                    if second.get_weapon() == "Powersaw":
-                        second.damage(20)
-                        damage_taken = 20
-                    if second.get_weapon() == "Flipper":
-                        second.damage(30)
-                        damage_taken = 30
-                if first.get_weapon() == "Powersaw":
-                    if second.get_weapon() == "Electrocutor":
-                        second.damage(30)
-                        damage_taken = 30
-                    if second.get_weapon() == "Powersaw":
-                        second.damage(10)
-                        damage_taken = 10
-                    if second.get_weapon() == "Flipper":
-                        second.damage(20)
-                        damage_taken = 20
-                if first.get_weapon() == "Flipper":
-                    if second.get_weapon() == "Electrocutor":
-                        second.damage(20)
-                        damage_taken = 20
-                    if second.get_weapon() == "Powersaw":
-                        second.damage(30)
-                        damage_taken = 30
-                    if second.get_weapon() == "Flipper":
-                        second.damage(10)
-                        damage_taken = 10
+                damage_taken = self.weap_weap_dmg(first.get_weapon(), second.get_weapon())
+                second.damage(damage_taken)
             # Dmg calculator for Weapon attacking Body
             elif menu_entry_index == 1 or bot_entry_index == attack_options[1]:
-                if first.get_weapon() == "Electrocutor":
-                    if second.get_body_type() == "Tracked":
-                        second.damage(30)
-                        damage_taken = 30
-                    if second.get_body_type() == "Soft-Wheeled":
-                        second.damage(10)
-                        damage_taken = 10
-                    if second.get_body_type() == "Hard-Wheeled":
-                        second.damage(20)
-                        damage_taken = 20
-                if first.get_weapon() == "Powersaw":
-                    if second.get_body_type() == "Tracked":
-                        second.damage(20)
-                        damage_taken = 20
-                    if second.get_body_type() == "Soft-Wheeled":
-                        second.damage(30)
-                        damage_taken = 20
-                    if second.get_body_type() == "Hard-Wheeled":
-                        second.damage(10)
-                        damage_taken = 10
-                if first.get_weapon() == "Flipper":
-                    if second.get_body_type() == "Tracked":
-                        second.damage(10)
-                        damage_taken = 10
-                    if second.get_body_type() == "Soft-Wheeled":
-                        second.damage(20)
-                        damage_taken = 20
-                    if second.get_body_type() == "Hard-Wheeled":
-                        second.damage(30)
-                        damage_taken = 30
+                damage_taken = self.weap_body_dmg(first.get_weapon(), second.get_body_type())
+                second.damage(damage_taken)
+            #  Random Arena attack selected
             elif menu_entry_index == 2 or bot_entry_index == attack_options[2]:
                 damage_taken = randint(0, 40)
                 second.damage(damage_taken)
@@ -386,12 +371,13 @@ class Game():
                 random_chance = randint(0, 100)
                 # 25% chance of player taking damage
                 if random_chance < 25:
-                    arena_choice = choice(arena_options)
+                    arena_choice = choice(arena_options)                    
                     print(f"{player_attacked.get_name()} has driven into the Arena's {arena_choice}!\n")
                     print(f"{player_attacked.get_name()} takes {rand_attack_dmg} damage! ouch...\n")
-                    # sleep(5)
+                    player_attacked.damage(rand_attack_dmg)
+                    sleep(5)
             # menu_entry_index = terminal_menu.show()
-            # sleep(3)
+            sleep(3)
             self.clear_terminal()
             first, second = second, first
         if self.player_one.get_health() > 0:
@@ -421,3 +407,9 @@ class Game():
 
 # When a player wins it goes back to weapon select menu, maybe add a break statement after the call up there
 # Add random change to randint environmental damage each turn to each player
+
+
+# game =Game()
+# game.game_mode()
+
+# in the move function
