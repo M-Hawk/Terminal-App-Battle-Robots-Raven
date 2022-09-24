@@ -12,6 +12,7 @@ class Player():
      body_type = "undefined", weapon = "undefined"):
         self.__name = name
         self.__health = health
+        self.__age = age
         self.__body_type = body_type
         self.__weapon = weapon
 
@@ -35,11 +36,11 @@ class Player():
         '''Sets player name'''
         self.__name = name
 
+    # age purely entered to error handle hence no getter
     def set_age(self, age):
         '''Sets players age'''
         self.__age = age
 
-    
     def set_body_type(self, body_type):
         '''Sets player body type'''
         self.__body_type = body_type
@@ -205,7 +206,7 @@ class Game():
                 sleep(1.5)
                 self.clear_terminal()
                 print(Fore.RED + self.menu_title)
-                continue               
+                continue           
         player_one_name = input("What's your Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
         while len(self.player_one.get_name()) == 0:
