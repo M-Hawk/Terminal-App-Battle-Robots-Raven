@@ -388,6 +388,7 @@ class Game():
                 continue
             elif player_one_roll > player_two_roll:
                 print(f"{self.player_one.get_name()} attacks first!\n")
+                self.attack_first_flag = False
                 break
             elif player_two_roll > player_one_roll:
                 print(f"{self.player_two.get_name()} attacks first!\n")
@@ -398,7 +399,7 @@ class Game():
         self.clear_terminal()        
         # Flag variable called in game object that determines who goes first based on roll above
         # Battle method called in here
-        if self.attack_first_flag:
+        if self.attack_first_flag is True:
             self.battle(self.player_two, self.player_one)
         elif self.attack_first_flag is False:
             self.battle(self.player_one, self.player_two)
