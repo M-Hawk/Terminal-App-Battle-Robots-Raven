@@ -95,9 +95,9 @@ class Game():
     # Intro message method for Battle Robots
     def introduction(self):
         self.clear_terminal()
-        print("... initializing Battle Robots ...\n")
+        print("... initializing...\n")
         sleep(2)
-        art = text2art("battlerobots", font='block-medium', chr_ignore=True)
+        art = text2art("Battle Robots !", font='block-medium', chr_ignore=True)
         print(art)
         sleep(3)
 
@@ -127,6 +127,8 @@ class Game():
     # Also error handled (if escape pushed) caused TypeError: list indices must be integers or slices, not NoneType
     def game_mode(self):
         self.clear_terminal()
+        menu_title = text2art("Battle Robots", font='block-medium', chr_ignore=True)
+        print(menu_title)
         options = ["Single Player", "Multi Player", "Exit Game"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
@@ -142,9 +144,13 @@ class Game():
                     self.multi_player()
                     self.game_exit_flag = False
                 self.clear_terminal()
+                print(menu_title)
                 menu_entry_index = terminal_menu.show()
             except TypeError:
-                print ("Please select an option")
+                print ("Please select an option...")
+                sleep(1)
+                self.clear_terminal()
+                print(menu_title)
                 menu_entry_index = terminal_menu.show()
                 continue
         print(f"You have selected {options[menu_entry_index]}!\n")
@@ -172,7 +178,7 @@ class Game():
 
     # Multiplayer method that creates two human players and calls arena effects method then body type method
     def multi_player(self):
-        # Errors handled on input for blank entries and same name for both players
+        # Errors prevented on input for blank entries and same name for both players
         self.player_one = Player()
         player_one_name = input("Player One: What's you're Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
@@ -238,7 +244,10 @@ class Game():
                         self.clear_terminal()
                         break
                     except TypeError:
-                        print ("Please select an option")
+                        print ("Please select an option...")
+                        sleep(1)
+                        self.clear_terminal()
+                        print(f"{char.get_name()}: What Body-Type do you want ? \n")
                         menu_entry_index = terminal_menu.show()
                         continue
                 if menu_entry_index == 3:
@@ -280,7 +289,10 @@ class Game():
                         self.clear_terminal()
                         break
                     except TypeError:
-                        print ("Please select an option")
+                        print ("Please select an option...")
+                        sleep(1)
+                        self.clear_terminal()
+                        print(f"{char.get_name()}: What Weapon do you want to punish your opponent with!\n")
                         menu_entry_index = terminal_menu.show()
                         continue   
                 if menu_entry_index == 3:
