@@ -19,30 +19,39 @@ class Player():
         self.__weapon = weapon
 
     def get_name(self):
+        '''Gets player name'''    
         return self.__name
 
     def get_health(self):
+        '''Gets player health'''
         return self.__health
 
     def get_body_type(self):
+        '''Gets player body type'''
         return self.__body_type
 
     def get_weapon(self):
+        '''Gets player weapon type'''
         return self.__weapon    
 
     def set_name(self, name):
+        '''Sets player name'''
         self.__name = name
 
     def set_body_type(self, body_type):
+        '''Sets player body type'''
         self.__body_type = body_type
 
     def set_weapon(self, weapon):
+        '''Sets player weapon type'''
         self.__weapon = weapon
 
     def damage(self, health):
+        '''Deals damage to player health'''
         self.__health -= health
 
 
+            
 class ComputerPlayer(Player):
     '''Child Class of the Player Class for AI specifics'''
     # Random names for AI player
@@ -131,6 +140,15 @@ class Game():
             return 10
         else:
             return 20
+
+    def health_color(self, player):
+        '''changes color of health depending on health returned'''
+        if player.get_health() >= 80:
+            return Fore.GREEN + str(player.get_health())
+        elif player.get_health() >= 40 and player.get_health() < 80:
+            return Fore.YELLOW + str(player.get_health())
+        else:
+            return Fore.RED + str(player.get_health())
 
     def game_mode(self):
         '''Game mode select menu that calls singleplayer or multiplayer methods'''
@@ -399,8 +417,10 @@ class Game():
         menu_entry_index = True
         bot_entry_index = True
         while self.player_one.get_health() > 0 and self.player_two.get_health() > 0: 
-            print(Fore.BLUE + f"Player One: {self.player_one.get_name()}, Health: {self.player_one.get_health()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
-            print(Fore.GREEN + f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
+            print(f"Player One: {self.player_one.get_name()}, Health: {self.health_color(self.player_one)}")
+            print(f"Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
+            print(f"Player Two: {self.player_two.get_name()}, Health: {self.health_color(self.player_two)}")
+            print(f"Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
             print("Where do you want to attack your opponent, " f"{first.get_name()}?\n")
             # List of attack options for players below (only 2 when declared, weapons and body type)
             attack_options = [f"Attack {second.get_name()} Weapon: {second.get_weapon()} ", f"Attack {second.get_name()} Body: {second.get_body_type()} "]
@@ -468,13 +488,20 @@ class Game():
             first, second = second, first
         if self.player_one.get_health() > 0:
             print(f"\n{self.player_one.get_name()} has obliterated {self.player_two.get_name()} in the Arena!\n")
-            print(f"\n{self.player_one.get_name()} Wins!\n")
+            print(Fore.RED + f"\n{self.player_one.get_name()} Wins!\n")
         else:
             print(f"\n{self.player_two.get_name()} has obliterated {self.player_one.get_name()} in the Arena!\n")
-            print(f"\n{self.player_two.get_name()} Wins!\n")
+            print(Fore.RED + f"\n{self.player_two.get_name()} Wins!\n")
         sleep(4)
         self.game_exit_flag = True
         self.clear_terminal()
 
 
 
+
+
+
+
+
+# game = Game()
+# game.game_mode()
