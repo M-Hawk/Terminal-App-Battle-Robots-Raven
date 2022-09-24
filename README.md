@@ -48,7 +48,14 @@ Add link to Trello Board
 
 ## Testing
 
-Add test table and structure
+For the testing of this application I implemented a manual testing approach. These tests focused on menu stack methods called each other correctly, whether user input was entered correctly and as expected, AI player selected correct attributes, first attacking player random roll worked correctly, user toggled Arena effects acted as designed and damage dealt was deducted correctly. These tests were carried out by myself and my partner. The table provided below describes in detail the results.
+
+| Feature                    | Expected Outcome                     | Actual Outcome | Issues Encountered |
+|---------|------------------|----------------|--------------------|
+|**Intro Screen Display** | Intro screen clears terminal then displays appropriate red font message. | User able to type into terminal, which affects message position, works as expected. | If excessive input typed it can disrupt font display by skewing, doesn't affect funtionality.
+|**Main Menu Screen** | Game Title in red font. Main menu displays a column of selectable entries "Single Player", "Multi Player", "Exit Game". | Menu loads as expected, user unable to type into terminal, works as expected. | The "escape" key caused a TypeError previously, handled
+|**Single Player Menu Select allows User to enter Name** | User can enter a non empty string name, that allocates name to player object. | If user enters empty string they are prompted to re-enter name, otherwise works as expected  | The "escape" key allows user to enter name as blank, if enough escape characters entered, removes first character off string displayed in next screen.
+|**Multi Player Menu Select allows both Users to enter Name** | Users can enter a non empty string name, that allocates name to each players object. | If users enter empty string or same name they are prompted to re-enter name, otherwise works as expected  | The "escape" key allows user to enter name as blank.
 
 ## Related Documents
 
