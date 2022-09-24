@@ -6,9 +6,6 @@ from random import choice, randint
 from time import sleep
 from simple_term_menu import TerminalMenu
 
-
-
-
 class Player():
     '''Player Class for inidividual human players'''
     def __init__(self, name = "undefined", health = 120,
@@ -50,8 +47,6 @@ class Player():
         '''Deals damage to player health'''
         self.__health -= health
 
-
-            
 class ComputerPlayer(Player):
     '''Child Class of the Player Class for AI specifics'''
     # Random names for AI player
@@ -109,6 +104,7 @@ class Game():
     #Initializes Colorama, if Windows  filter ANSI escape sequences out of any text
     #sent to stdout or stderr, and replace them with equivalent Win32 calls
     colorama.init(autoreset=True)
+
     def introduction(self):
         '''Intro message method for Battle Robots'''
         self.clear_terminal()
@@ -495,13 +491,3 @@ class Game():
         sleep(4)
         self.game_exit_flag = True
         self.clear_terminal()
-
-
-
-
-
-
-
-
-# game = Game()
-# game.game_mode()
