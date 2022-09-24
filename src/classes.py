@@ -7,7 +7,7 @@ from simple_term_menu import TerminalMenu
 
 
 class Player():
-    def __init__(self, name = "undefined", health = 150,
+    def __init__(self, name = "undefined", health = 120,
     body_type = "undefined", weapon = "undefined"):
         self.__name = name
         self.__health = health
@@ -56,7 +56,7 @@ class ComputerPlayer(Player):
         self.__name = choice(ComputerPlayer.bot_names)
         self.__body_type = choice(ComputerPlayer.bot_body_type)
         self.__weapon = choice(ComputerPlayer.bot_weapon)
-        self.__health = 150
+        self.__health = 120
         # Had to declare all parameters as body type and weapon were positional
         super().__init__(self.__name, self.__health, self.__body_type, self.__weapon)
 
@@ -91,6 +91,8 @@ class Game():
             ("Powersaw", "Hard-Wheeled"),
             ("Flipper", "Tracked")
         }
+
+        self.menu_title = text2art("Battle Robots", font='block-medium', chr_ignore=True)
 
     # Intro message method for Battle Robots
     def introduction(self):
@@ -127,8 +129,7 @@ class Game():
     # Also error handled (if escape pushed) caused TypeError: list indices must be integers or slices, not NoneType
     def game_mode(self):
         self.clear_terminal()
-        menu_title = text2art("Battle Robots", font='block-medium', chr_ignore=True)
-        print(menu_title)
+        print(self.menu_title)
         options = ["Single Player", "Multi Player", "Exit Game"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
@@ -144,13 +145,13 @@ class Game():
                     self.multi_player()
                     self.game_exit_flag = False
                 self.clear_terminal()
-                print(menu_title)
+                print(self.menu_title)
                 menu_entry_index = terminal_menu.show()
             except TypeError:
                 print ("Please select an option...")
                 sleep(1)
                 self.clear_terminal()
-                print(menu_title)
+                print(self.menu_title)
                 menu_entry_index = terminal_menu.show()
                 continue
         print(f"You have selected {options[menu_entry_index]}!\n")
@@ -158,6 +159,7 @@ class Game():
     # Single player method that creates a human and computer player, calls arena effects method then body type method
     def single_player(self):
         # Errors handled on input for blank entries
+        print(self.menu_title)        
         self.player_one = Player()
         player_one_name = input("What's you're Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
@@ -179,14 +181,17 @@ class Game():
     # Multiplayer method that creates two human players and calls arena effects method then body type method
     def multi_player(self):
         # Errors prevented on input for blank entries and same name for both players
+        print(self.menu_title)
         self.player_one = Player()
         player_one_name = input("Player One: What's you're Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
         self.clear_terminal()
+        print(self.menu_title)
         while len(self.player_one.get_name()) == 0:
             print("Cannot have a blank name..")
             sleep(2)
             self.clear_terminal()
+            print(self.menu_title)
             player_one_name = input("Player One: What's you're Battle Robots Name ? ")
             self.player_one.set_name(player_one_name.capitalize())           
         self.player_two = Player() 
@@ -196,6 +201,7 @@ class Game():
             print("Both players cannot have the same name or blank names ")
             sleep(2)
             self.clear_terminal()
+            print(self.menu_title)
             player_two_name = input("Player Two: What's you're Battle Robots Name ? ")
             self.player_two.set_name(player_two_name.capitalize())
         self.clear_terminal()
@@ -204,6 +210,7 @@ class Game():
 
     # Arena effects menu 
     def arena_effects(self):
+        print(self.menu_title)
         print("Do you want Arena Effects added to game ?\n")
         print(" Arena effects allow players to target their opponent with the Arena's Powersaw's, Crushing Mallets and Flame-Jets!\n")
         print(" Players may also randomly be hit by these effects in the Arena!\n")
@@ -221,6 +228,7 @@ class Game():
 
     # Body type select menu, allows both players sequentially to select body, then calls weapon method
     def body_type_menu(self, player_one, player_two):
+        print(self.menu_title)
         players = [player_one, player_two]
         exit_flag = False
         for char in players:
@@ -242,17 +250,20 @@ class Game():
                             char.set_body_type("Hard-Wheeled")
                         sleep(2)
                         self.clear_terminal()
+                        print(self.menu_title)
                         break
                     except TypeError:
                         print ("Please select an option...")
                         sleep(1)
                         self.clear_terminal()
+                        print(self.menu_title)
                         print(f"{char.get_name()}: What Body-Type do you want ? \n")
                         menu_entry_index = terminal_menu.show()
                         continue
                 if menu_entry_index == 3:
                     exit_flag = True
                     self.clear_terminal()
+                    print(self.menu_title)
                     print(f"You have selected {body_type_options[menu_entry_index]}!\n")
                     sleep(1)
             if self.game_exit_flag:
@@ -287,17 +298,20 @@ class Game():
                             char.set_weapon("Flipper")
                         sleep(2)
                         self.clear_terminal()
+                        print(self.menu_title)
                         break
                     except TypeError:
                         print ("Please select an option...")
                         sleep(1)
                         self.clear_terminal()
+                        print(self.menu_title)
                         print(f"{char.get_name()}: What Weapon do you want to punish your opponent with!\n")
                         menu_entry_index = terminal_menu.show()
                         continue   
                 if menu_entry_index == 3:
                     exit_flag = True
                     self.clear_terminal()
+                    print(self.menu_title)
                     print(f"You have selected {weapon_options[menu_entry_index]}!\n")
                     sleep(1)
             if exit_flag:
@@ -318,6 +332,7 @@ class Game():
             print("...initializing...")
             sleep(4)
             self.clear_terminal()
+            print(self.menu_title)
     
     # Battle load screen method displays players selected attributes and randomly rolls for who attacks first, calls battle method
     def battle_load_screen(self):
@@ -327,6 +342,7 @@ class Game():
         print("...initializing...\n")
         sleep(4)
         self.clear_terminal()
+        print(self.menu_title)
         print("Roll for who attacks first!\n")
         player_one_roll = 0
         player_two_roll = 0
@@ -360,14 +376,15 @@ class Game():
     # Large Battle method that allows players to sequentially attack each other, includes computer attack and Arena attacks
     def battle(self, first, second):
         # Declared menu variable here to prevent assignment errors later (required two menus one for bot and one for players)
+        print(self.menu_title)
         menu_entry_index = True
         bot_entry_index = True
         while self.player_one.get_health() > 0 and self.player_two.get_health() > 0:
             print(f"Player One: {self.player_one.get_name()}, Health: {self.player_one.get_health()}, Weapon: {self.player_one.get_weapon()}, Body-Type: {self.player_one.get_body_type()}\n")
             print(f"Player Two: {self.player_two.get_name()}, Health: {self.player_two.get_health()}, Weapon: {self.player_two.get_weapon()}, Body-Type: {self.player_two.get_body_type()}\n")
-            print("Where do you want to attack your opponent, " f"{first.get_name()}!\n")
+            print("Where do you want to attack your opponent, " f"{first.get_name()}?\n")
             # List of attack options for players below (only 2 when declared, weapons and body type)
-            attack_options = [f"{second.get_name()} Weapon: {second.get_weapon()} ", f"{second.get_name()} Body: {second.get_body_type()} "]
+            attack_options = [f"Attack {second.get_name()} Weapon: {second.get_weapon()} ", f"Attack {second.get_name()} Body: {second.get_body_type()} "]
             # Arena effects added here, arena options declared outside if statement so they can be used later in random attack statement
             arena_options = ["Powersaw", "Crushing Mallets", "Flame-Jets"]
             arena_choice = choice(arena_options)
@@ -381,10 +398,10 @@ class Game():
                 print(f"{first.get_name()} is thinking....\n")
                 sleep(3)
                 if bot_entry_index == attack_options[0]:
-                    print(f"{first.get_name()} has selected Weapon: {second.get_weapon()}\n")
+                    print(f"{first.get_name()} has selected: Attack {second.get_name()} Weapon: {second.get_weapon()}\n")
                     sleep(3)
                 elif bot_entry_index == attack_options[1]:
-                    print(f"{first.get_name()} has selected Body Type: {second.get_body_type()}\n")
+                    print(f"{first.get_name()} has selected: Attack {second.get_name()} Body: {second.get_body_type()}\n")
                     sleep(3)
                 elif bot_entry_index == attack_options[2]:
                     print(f"{first.get_name()} attempts to push {second.get_name()} into {arena_choice}\n")
@@ -394,6 +411,7 @@ class Game():
                 terminal_menu = TerminalMenu(attack_options)
                 menu_entry_index = terminal_menu.show()
                 print(f"You have selected {attack_options[menu_entry_index]}\n")
+                sleep(2)
             # Weapon always attacks either body or Weapon
             # Dmg calculator for Weapon attacking Weapon, calls weapon v weapon method
             if menu_entry_index == 0 or bot_entry_index == attack_options[0]:
@@ -421,22 +439,20 @@ class Game():
                     arena_choice = choice(arena_options)
                     sleep(2)                    
                     print(f"{player_attacked.get_name()} has driven into the Arena's {arena_choice}!\n")
+                    sleep(2)
                     print(f"{player_attacked.get_name()} takes {rand_attack_dmg} damage! ouch...\n")
                     player_attacked.damage(rand_attack_dmg)
                     sleep(2)
-            sleep(3)
+            sleep(2)
             self.clear_terminal()
+            print(self.menu_title)
             first, second = second, first
         if self.player_one.get_health() > 0:
             print(f"\n{self.player_one.get_name()} has obliterated {self.player_two.get_name()} in the Arena!\n")
             print(f"\n{self.player_one.get_name()} Wins!\n")
-            art = text2art("\nbattlerobots", font='block-medium', chr_ignore=True)
-            print(art)
         else:
             print(f"\n{self.player_two.get_name()} has obliterated {self.player_one.get_name()} in the Arena!\n")
             print(f"\n{self.player_two.get_name()} Wins!\n")
-            art = text2art("\nbattlerobots", font='block-medium', chr_ignore=True)
-            print(art)
         sleep(4)
         self.game_exit_flag = True
         self.clear_terminal()
