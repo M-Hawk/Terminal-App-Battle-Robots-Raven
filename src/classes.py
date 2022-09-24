@@ -8,8 +8,8 @@ from simple_term_menu import TerminalMenu
 
 class Player():
     '''Player Class for inidividual human players'''
-    def __init__(self, name = "undefined", health = 120,
-    body_type = "undefined", weapon = "undefined"):
+    def __init__(self, name = "undefined", health = 120, age = 0,
+     body_type = "undefined", weapon = "undefined"):
         self.__name = name
         self.__health = health
         self.__body_type = body_type
@@ -35,6 +35,11 @@ class Player():
         '''Sets player name'''
         self.__name = name
 
+    def set_age(self, age):
+        '''Sets players age'''
+        self.__age = age
+
+    
     def set_body_type(self, body_type):
         '''Sets player body type'''
         self.__body_type = body_type
@@ -186,14 +191,29 @@ class Game():
         # Errors handled on input for blank entries
         print(Fore.RED + self.menu_title)        
         self.player_one = Player()
-        player_one_name = input("What's you're Battle Robots Name ? ")
+        while True:
+            try:
+                player_one_age = int(input("Please enter your age ? "))
+                if player_one_age < 0:
+                    print("Please enter a valid age")
+                    sleep(1)
+                    continue
+                self.player_one.set_age(player_one_age)
+                break
+            except ValueError:
+                print ("Please enter your age as a whole number")
+                sleep(1.5)
+                self.clear_terminal()
+                print(Fore.RED + self.menu_title)
+                continue               
+        player_one_name = input("What's your Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
         while len(self.player_one.get_name()) == 0:
             print("Cannot have a blank name..")
             sleep(2)
             self.clear_terminal()
             print(Fore.RED + self.menu_title)
-            player_one_name = input("Player One: What's you're Battle Robots Name ? ")
+            player_one_name = input("What's your Battle Robots Name ? ")
             self.player_one.set_name(player_one_name.capitalize()) 
         print(f"\n Welcome, {self.player_one.get_name()}")
         self.player_two = ComputerPlayer()
@@ -211,7 +231,7 @@ class Game():
         # Errors prevented on input for blank entries and same name for both players
         print(Fore.RED + self.menu_title)
         self.player_one = Player()
-        player_one_name = input("Player One: What's you're Battle Robots Name ? ")
+        player_one_name = input("Player One: What's your Battle Robots Name ? ")
         self.player_one.set_name(player_one_name.capitalize())
         self.clear_terminal()
         print(Fore.RED + self.menu_title)
@@ -220,17 +240,17 @@ class Game():
             sleep(2)
             self.clear_terminal()
             print(Fore.RED + self.menu_title)
-            player_one_name = input("Player One: What's you're Battle Robots Name ? ")
+            player_one_name = input("Player One: What's your Battle Robots Name ? ")
             self.player_one.set_name(player_one_name.capitalize())           
         self.player_two = Player() 
-        player_two_name = input("Player Two: What's you're Battle Robots Name ? ")
+        player_two_name = input("Player Two: What's your Battle Robots Name ? ")
         self.player_two.set_name(player_two_name.capitalize())
         while self.player_one.get_name() == self.player_two.get_name() or len(self.player_two.get_name()) == 0:
             print("Both players cannot have the same name or blank names ")
             sleep(2)
             self.clear_terminal()
             print(Fore.RED + self.menu_title)
-            player_two_name = input("Player Two: What's you're Battle Robots Name ? ")
+            player_two_name = input("Player Two: What's your Battle Robots Name ? ")
             self.player_two.set_name(player_two_name.capitalize())
         self.clear_terminal()
         self.arena_effects()
