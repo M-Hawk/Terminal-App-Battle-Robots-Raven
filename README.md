@@ -2,9 +2,9 @@
 
 [Battle Robots Github Repository](https://github.com/M-Hawk/MatthewHawkins_T1A3)
 
-[LINK FOR PRESENTATION](https://github.com/M-Hawk/MatthewHawkins_T1A3)
+[Presentation](https://vimeo.com/753529029/3c07985c2e)
 
-[LINK FOR SLIDEDECK](https://github.com/M-Hawk/MatthewHawkins_T1A3)
+[Slide Deck](https://github.com/M-Hawk/MatthewHawkins_T1A3/blob/main/ppt/slide_deck.pdf)
 
 ## Table of Contents
 
