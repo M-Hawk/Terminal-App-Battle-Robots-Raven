@@ -4,28 +4,26 @@
 
 ## Table of Contents
 
-Create links to below contents
-
 - About
+- Features
+- Audience
 - User Interaction and Experience
 - Control Flow Diagram
 - Implementation Plan
 - Testing
-- Related Documents
-- 
+- User Help Document
+- Installation Instructions
 - Resources
 - Tech Stack
-- Author 
+- Author
 
 ## About
 
-Battle Robots is a Game that allows up to two players to Battle each other, or one player can battle an AI player using simulated Robots in an Arena.
+Battle Robots is a Game that allows up to two players to design their own Battle Robot using Body or Weapon components, they then battle each other in an Arena to determine the winner. There is also a Single Player mode that allows one player to battle an AI player using a randomly designed Robot.
 
-### Statement of Purpose
+## Features
 
-### Features
-
-#### Battle-Robot Design
+### Battle-Robot Design
 
 Battle Robots allows players to battle each other using up to 3 selectable Body Types and 3 selectable Weapon Types.
 
@@ -39,29 +37,29 @@ Each weapon type is Strong or Weak vs particular Weapon Types.
 
 Full details provided in Help Document.
 
-#### Single-Player Mode
+### Single-Player Mode
 
 Single Player Mode allows an individual to play against a randomly generated AI Player that selects a random name and components from a list.
 
-Players can then battle the AI Player in the Arena taking turns attacking each other Body or Weapon to determine the winner.
+Players can then battle the AI Player in the Arena, players take turns attacking each others Body or Weapon Components, when a players health falls to 0 they lose.
 
-#### Multi-Player Mode
+### Multi-Player Mode
 
-Multi Player Mode allows two Human Players to Battle it out for dominance using their own type of Battle Robot.
+Multi Player Mode allows two Human Players to Battle it out for dominance using their own self designed Battle Robot.
 
 Players take turns selecting Body Type and Weapon Type.
 
-Players then battle it out in the Arena taking turns attacking each other Body or Weapon to try and destroy each others Battle Robot.
+Players then battle it out in the Arena taking turns attacking each other Body or Weapon Components, when a players health falls to 0 they lose.
 
-#### Random Arena Effects
+### Random Arena Effects
 
 Players can opt to add Arena Effects to any given Game.
 
 Arena effects allow players to select an extra attack that interacts with the Battle Arena and damages the opposing players Battle Robot.
 
-Players also have a random chance of taking damage from the Arena own Weaponry.
+Players also have a random chance of taking damage from the Arena's own Weaponry.
 
-### Audience
+## Audience
 
 This Game was designed primarily for gamers, friends and anyone looking to try out a basic terminal game to battle each other in a fun and interesting way.
 
@@ -110,8 +108,6 @@ Full details of the game experience, including interaction, user interface and d
 [Trello Board](https://trello.com/b/YB6Y2VwP/t1a3)
 
 ![Trello Board Progress](/docs/trello_progress.png)
-
-Add development log (time permitting)
 
 ## Testing
 
