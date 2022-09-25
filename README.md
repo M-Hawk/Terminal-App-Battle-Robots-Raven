@@ -28,7 +28,7 @@ Create links to below contents
 
 #### Multi-Player Mode
 
-#### Random Map Interaction
+#### Random Arena Effects
 
 ### Audience
 
@@ -38,13 +38,15 @@ Add photos of game and text
 
 ## Control Flow Diagram
 
-![Control Flow Diagram for BattleRobot Design](/docs/BattleRobots%20Control%20Flowchart.png)
+![Control Flow Diagram for BattleRobot Design](/docs/br_controlflow.png)
 
 ## Implementation Plan
 
 Add photo of Trello Board
 
 Add link to Trello Board
+
+Add development log (time permitting)
 
 ## Testing
 
@@ -69,13 +71,14 @@ For the testing of this application I implemented a manual testing approach. The
 |**Arena Effects Act Correctly** | If player or computer selects Arena attack, random damage between 0-40 inclusive, is deducted from health. Random Arena damage has 25% chance to inflict random damage between 0-20 inclusive each Player turn. | As expected. | Nil.
 |**Winning Player is selected correctly** | At end of Player's turn and while both players health is above 0, battle continues. If one players health is 0 or below at end of round, a winner is selected. The player without 0 health is declared the winner. | As expected. | If both players somehow ended up with 0 health at the same time, possibly from random arena attack. Player one is declared victor. Unlikely. Minor Issue
 
-## Related Documents
+## User Help Document
 
-Add development log (time permitting)
+
 
 Add help documents
 
-## References (if required)
+## Installation Instructions
+
 
 ## Resources
 
@@ -85,6 +88,11 @@ ascii art
 
 ## Tech Stack
 
-languages used
+All code is produced using.
 
-include coding style and styling conventions
+Python 3 Version 3.10.4
+PEP 8 Standards
+
+## Author
+
+Matthew Hawkins
