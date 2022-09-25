@@ -8,8 +8,8 @@ from simple_term_menu import TerminalMenu
 
 class Player():
     '''Player Class for inidividual human players'''
-    def __init__(self, name = "undefined", health = 120, age = 0,
-     body_type = "undefined", weapon = "undefined"):
+    def __init__(self, name = "undefined", health = 120,
+     body_type = "undefined", weapon = "undefined", age = 0):
         self.__name = name
         self.__health = health
         self.__age = age
@@ -17,7 +17,7 @@ class Player():
         self.__weapon = weapon
 
     def get_name(self):
-        '''Gets player name'''    
+        '''Gets player name'''
         return self.__name
 
     def get_health(self):
@@ -372,7 +372,7 @@ class Game():
                 self.game_exit_flag = True
                 break
         if exit_flag is False:
-            self.battle_load_screen()    
+            self.battle_load_screen()
 
     def bot_select(self):
         '''Computer player component auto select menu, called in weapons menu method'''
