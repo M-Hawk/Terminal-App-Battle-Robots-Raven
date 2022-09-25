@@ -25,7 +25,7 @@ Battle Robots is a Game that allows up to two players to Battle each other, or o
 
 ### Features
 
-#### BattleRobot Design
+#### Battle-Robot Design
 
 Battle Robots allows players to battle each other using up to 3 selectable Body Types and 3 selectable Weapon Types.
 
@@ -142,6 +142,34 @@ For the testing of this application I implemented a manual testing approach. The
 
 ## Installation Instructions
 
+In order to run this Game please follow the below instructions:
+
+1. Ensure you have the latest version of Python installed on your computer, if not please go [here](https://www.python.org/downloads/).
+2. Clone the files from this Repository using the following command into your desired source folder:
+
+```bash
+git clone https://github.com/M-Hawk/MatthewHawkins_T1A3.git
+```
+
+3. Navigate to the src folder where you cloned the repository:
+
+```bash
+cd src
+```
+
+Type the following commands into your bash terminal one at a time.
+
+```bash
+python3 -m pip install --user --upgrade pip
+```
+
+```bash
+python3 -m pip --version
+```
+
+```bash
+python3 -m venv /path/to/new/virtual/environment
+```
 
 ## Resources
 
@@ -164,6 +192,7 @@ Simple Term Menu Module
 ## Tech Stack
 
 Python 3 Version 3.10.4
+
 PEP 8 Standards
 
 ## Author
