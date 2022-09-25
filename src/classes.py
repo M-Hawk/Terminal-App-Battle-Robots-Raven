@@ -492,7 +492,7 @@ class Game():
                 rand_attack_dmg = randint(0, 20)
                 random_chance = randint(0, 100)
                 # 25% chance of player taking damage
-                if random_chance < 25:
+                if random_chance <= 25:
                     arena_choice = choice(arena_options)
                     sleep(2)                    
                     print(f"{player_attacked.get_name()} has driven into the Arena's {arena_choice}!\n")
