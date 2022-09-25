@@ -2,6 +2,10 @@
 
 [Battle Robots Github Repository](https://github.com/M-Hawk/MatthewHawkins_T1A3)
 
+[LINK FOR PRESENTATION](https://github.com/M-Hawk/MatthewHawkins_T1A3)
+
+[LINK FOR SLIDEDECK](https://github.com/M-Hawk/MatthewHawkins_T1A3)
+
 ## Table of Contents
 
 - [About](https://github.com/M-Hawk/MatthewHawkins_T1A3#about)
@@ -108,6 +112,8 @@ Full details of the game experience, including interaction, user interface and d
 [Trello Board](https://trello.com/b/YB6Y2VwP/t1a3)
 
 ![Trello Board Progress](/docs/trello_progress.png)
+
+![Trello Board Complete](/docs/trello_complete.png)
 
 ## Testing
 
