@@ -4,18 +4,18 @@
 
 ## Table of Contents
 
-- About
-- Features
-- Audience
-- User Interaction and Experience
-- Control Flow Diagram
-- Implementation Plan
-- Testing
-- User Help Document
-- Installation Instructions
-- Resources
-- Tech Stack
-- Author
+- About [About](https://github.com/M-Hawk/MatthewHawkins_T1A3#about)
+- Features [Features](https://github.com/M-Hawk/MatthewHawkins_T1A3#features)
+- Audience [Audience](https://github.com/M-Hawk/MatthewHawkins_T1A3#audience)
+- User Interaction and Experience [User-Interaction-and-Experience](https://github.com/M-Hawk/MatthewHawkins_T1A3#user-interaction-and-experience)
+- Control Flow Diagram [Control-Flow-Diagram](https://github.com/M-Hawk/MatthewHawkins_T1A3#control-flow-diagram)
+- Implementation Plan [Implementation-Plan](https://github.com/M-Hawk/MatthewHawkins_T1A3#implementation-plan)
+- Testing [Testing](https://github.com/M-Hawk/MatthewHawkins_T1A3#testing)
+- User Help Document [User-Help-Document](https://github.com/M-Hawk/MatthewHawkins_T1A3#user-help-document)
+- Installation Instructions [Installation-Instructions](https://github.com/M-Hawk/MatthewHawkins_T1A3#installation-instructions)
+- Resources [Resources](https://github.com/M-Hawk/MatthewHawkins_T1A3#resources)
+- Tech Stack [Tech-Stack](https://github.com/M-Hawk/MatthewHawkins_T1A3#tech-stack)
+- Author [Author](https://github.com/M-Hawk/MatthewHawkins_T1A3#author)
 
 ## About
 
