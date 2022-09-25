@@ -1,6 +1,6 @@
 # BattleRobots!
 
-add link to source control repo
+[Battle Robots Github Repository](https://github.com/M-Hawk/MatthewHawkins_T1A3)
 
 ## Table of Contents
 
@@ -12,11 +12,14 @@ Create links to below contents
 - Implementation Plan
 - Testing
 - Related Documents
-- References (if required)
+- 
 - Resources
 - Tech Stack
+- Author 
 
 ## About
+
+Battle Robots is a Game that allows up to two players to Battle each other, or one player can battle an AI player using simulated Robots in an Arena.
 
 ### Statement of Purpose
 
@@ -24,17 +27,79 @@ Create links to below contents
 
 #### BattleRobot Design
 
+Battle Robots allows players to battle each other using up to 3 selectable Body Types and 3 selectable Weapon Types.
+
+The available Body Types are "Tracked", "Soft-Wheeled" and "Hard-Wheeled".
+
+Each body type is Strong or Weak vs particular Weapon Types.
+
+The available Weapon Types are the "Electrocutor", "Powersaw" and "Flipper".
+
+Each weapon type is Strong or Weak vs particular Weapon Types.
+
+Full details provided in Help Document.
+
 #### Single-Player Mode
+
+Single Player Mode allows an individual to play against a randomly generated AI Player that selects a random name and components from a list.
+
+Players can then battle the AI Player in the Arena taking turns attacking each other Body or Weapon to determine the winner.
 
 #### Multi-Player Mode
 
+Multi Player Mode allows two Human Players to Battle it out for dominance using their own type of Battle Robot.
+
+Players take turns selecting Body Type and Weapon Type.
+
+Players then battle it out in the Arena taking turns attacking each other Body or Weapon to try and destroy each others Battle Robot.
+
 #### Random Arena Effects
+
+Players can opt to add Arena Effects to any given Game.
+
+Arena effects allow players to select an extra attack that interacts with the Battle Arena and damages the opposing players Battle Robot.
+
+Players also have a random chance of taking damage from the Arena own Weaponry.
 
 ### Audience
 
+This Game was designed primarily for gamers, friends and anyone looking to try out a basic terminal game to battle each other in a fun and interesting way.
+
 ## User Interaction and Experience
 
-Add photos of game and text
+Full details of the game experience, including interaction, user interface and damage details are provided in the Help Document provided in this README, link in headings.
+
+### **Intro Screen**
+
+![Battle Robots Intro Screen](/docs/br_intro.png)
+
+### **Main Menu**
+
+![Battle Robots Main Menu](/docs/br_mainmenu.png)
+
+### **AI Battle Robot Generated**
+
+![Battle Robots AI Select Screen](/docs/br_aiselect.png)
+
+### **Arena Effects Screen**
+
+![Battle Robots Arena Effects Screen](/docs/br_arenaeffects.png)
+
+### **Versus Screen**
+
+![Versus Screen](/docs/br_versus.png)
+
+### **Attack Roll Screen**
+
+![First Attack Roll Screen](/docs/br_roll.png)
+
+### **Battle Screen**
+
+![Battle Screen](/docs/br_battle.png)
+
+### **Victory Screen**
+
+![Victory Screen](/docs/br_victory.png)
 
 ## Control Flow Diagram
 
@@ -42,9 +107,9 @@ Add photos of game and text
 
 ## Implementation Plan
 
-Add photo of Trello Board
+[Trello Board](https://trello.com/b/YB6Y2VwP/t1a3)
 
-Add link to Trello Board
+![Trello Board Progress](/docs/trello_progress.png)
 
 Add development log (time permitting)
 
@@ -73,22 +138,30 @@ For the testing of this application I implemented a manual testing approach. The
 
 ## User Help Document
 
-
-
-Add help documents
+ [Battle Robots User Help Document](https://github.com/M-Hawk/MatthewHawkins_T1A3/blob/main/docs/help.md)
 
 ## Installation Instructions
 
 
 ## Resources
 
-imported modules
+**Python3 Standard Libray Modules**
 
-ascii art
+OS Module
+
+Time Module
+
+Random Module
+
+**Python3 Imported Modules**
+
+Colorama Module
+
+Art Module
+
+Simple Term Menu Module
 
 ## Tech Stack
-
-All code is produced using.
 
 Python 3 Version 3.10.4
 PEP 8 Standards
