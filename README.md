@@ -145,35 +145,28 @@ For the testing of this application I implemented a manual testing approach. The
 In order to run this Game please follow the below instructions:
 
 1. Ensure you have the latest version of Python installed on your computer, if not please go [here](https://www.python.org/downloads/).
+
 2. Clone the files from this Repository using the following command into your desired source folder:
 
-```bash
-git clone https://github.com/M-Hawk/MatthewHawkins_T1A3.git
-```
+    ```bash
+    git clone https://github.com/M-Hawk/MatthewHawkins_T1A3.git
+    ```
 
-3. Navigate to the src folder where you cloned the repository:
+3. Navigate to the src folder where you cloned the repository and change into the src directory using the below code:
 
-```bash
-cd src
-```
+    ```bash
+    cd src
+    ```
 
-Type the following commands into your bash terminal one at a time.
+4. Now run the executable bash script below, this creates a virtual environment, installs the required packages, then runs the game: ENJOY!
 
-```bash
-python3 -m pip install --user --upgrade pip
-```
-
-```bash
-python3 -m pip --version
-```
-
-```bash
-python3 -m venv /path/to/new/virtual/environment
-```
+    ```bash
+    source run_game.sh
+    ```
 
 ## Resources
 
-**Python3 Standard Libray Modules**
+### **Python3 Standard Libray Modules**
 
 OS Module
 
@@ -181,7 +174,7 @@ Time Module
 
 Random Module
 
-**Python3 Imported Modules**
+### **Python3 Imported Modules**
 
 Colorama Module
 
