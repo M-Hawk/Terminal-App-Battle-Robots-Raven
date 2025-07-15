@@ -1,10 +1,43 @@
 #!/bin/bash
 
-python3 -m pip install --user --upgrade pip # installs python package manager
-python3 -m venv .venv # created a virtual environment
-source .venv/bin/activate # activates a virtual environment
-python3 -m pip install simple-term-menu # installs simple-term-menu module
-python3 -m pip install art==5.7 # installs art module
-python3 -m pip install colorama # installs colorama module
-python3 main.py # runs game script
-deactivate # deactivates virtual environment
+# Detect OS
+OS="$(uname -s)"
+
+# Set Python command and venv activate script depending on OS
+if [[ "$OS" == "Linux" || "$OS" == "Darwin" ]]; then
+    PYTHON_CMD=python3
+    ACTIVATE_SCRIPT=".venv/bin/activate"
+    MENU_PACKAGE="simple-term-menu"
+else
+    PYTHON_CMD=python
+    ACTIVATE_SCRIPT=".venv/Scripts/activate"
+    MENU_PACKAGE=""
+fi
+
+# Create virtual environment if not already created
+if [ ! -d ".venv" ]; then
+    echo "Creating virtual environment..."
+    $PYTHON_CMD -m venv .venv
+else
+    echo "Virtual environment already exists."
+fi
+
+# Activate the virtual environment
+source "$ACTIVATE_SCRIPT"
+
+# Upgrade pip inside the venv
+$PYTHON_CMD -m pip install --upgrade pip
+
+# Install dependencies into the venv
+$PYTHON_CMD -m pip install colorama art==5.7
+
+# Install simple-term-menu only if Linux or macOS
+if [ -n "$MENU_PACKAGE" ]; then
+    $PYTHON_CMD -m pip install "$MENU_PACKAGE"
+fi
+
+# Run the game
+$PYTHON_CMD main.py
+
+# Deactivate the venv when done
+deactivate

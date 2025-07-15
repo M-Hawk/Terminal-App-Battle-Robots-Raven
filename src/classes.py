@@ -4,7 +4,10 @@ from art import *
 from os import name, system
 from random import choice, randint
 from time import sleep
-from simple_term_menu import TerminalMenu
+import platform
+
+if platform.system() != "Windows":
+    from simple_term_menu import TerminalMenu
 
 class Player():
     '''Player Class for inidividual human players'''
@@ -152,15 +155,35 @@ class Game():
         else:
             return Fore.RED + str(player.get_health())
 
+    def windows_menu(self, options):
+        print("\nChoose an option:\n")
+        for idx, opt in enumerate(options):
+            print(f"{idx + 1}. {opt}")
+        while True:
+            choice = input("\nEnter number: ")
+            if choice.isdigit() and 1 <= int(choice) <= len(options):
+                return int(choice) - 1
+            else:
+                print("Invalid selection, please enter a number between 1 and", len(options))
+
     def game_mode(self):
         '''Game mode select menu that calls singleplayer or multiplayer methods'''
         self.clear_terminal()
         print(Fore.RED + self.menu_title)
+
         options = ["Single Player", "Multi Player", "Exit Game"]
-        terminal_menu = TerminalMenu(options)
-        menu_entry_index = terminal_menu.show()
-        # Error handled (if escape pushed) caused TypeError
-        while menu_entry_index != 2:
+
+        while True:
+            if platform.system() == "Windows":
+                menu_entry_index = self.windows_menu(options)
+            else:
+                terminal_menu = TerminalMenu(options)
+                menu_entry_index = terminal_menu.show()
+
+            if menu_entry_index == 2:  # Exit Game
+                print(f"You have selected {options[menu_entry_index]}!\n")
+                break
+
             try:
                 print(f"You have selected {options[menu_entry_index]}!\n")
                 sleep(1)
@@ -173,15 +196,12 @@ class Game():
                     self.game_exit_flag = False
                 self.clear_terminal()
                 print(Fore.RED + self.menu_title)
-                menu_entry_index = terminal_menu.show()
-            except TypeError:
-                print ("Please select an option...")
-                sleep(1)
+            except Exception as e:
+                print("An error occurred:", e)
+                sleep(2)
                 self.clear_terminal()
                 print(Fore.RED + self.menu_title)
-                menu_entry_index = terminal_menu.show()
-                continue
-        print(f"You have selected {options[menu_entry_index]}!\n")
+        
         # Uninitializes Colorama when game ends, restores stdout,stderr to original value on Windows
         colorama.deinit()
 
@@ -263,9 +283,15 @@ class Game():
         print("Do you want Arena Effects added to game ?\n")
         print(" Arena effects allow players to target their opponent with the Arena's Powersaw's, Crushing Mallets and Flame-Jets!\n")
         print(" Players may also randomly be hit by these effects in the Arena!\n")
+
         options = ["Yes", "No"]
-        terminal_menu = TerminalMenu(options)
-        menu_entry_index = terminal_menu.show()
+
+        if platform.system() == "Windows":
+            menu_entry_index = self.windows_menu(options)
+        else:
+            terminal_menu = TerminalMenu(options)
+            menu_entry_index = terminal_menu.show()
+
         self.clear_terminal()
         if menu_entry_index == 0:
             print(f"You have selected {options[menu_entry_index]}!\n")
@@ -287,9 +313,15 @@ class Game():
                 self.weapon_menu(player_one, player_two)
             else:
                 print(f"{char.get_name()}: What Body-Type do you want ? \n")
+
                 body_type_options = ["Tracked", "Soft-Wheeled", "Hard-Wheeled", "Main Menu"]
-                terminal_menu = TerminalMenu(body_type_options)
-                menu_entry_index = terminal_menu.show()
+
+                if platform.system() == "Windows":
+                    menu_entry_index = self.windows_menu(body_type_options)
+                else:
+                    terminal_menu = TerminalMenu(body_type_options)
+                    menu_entry_index = terminal_menu.show()
+
                 while menu_entry_index != 3:
                     try:
                         print(f"You have selected {body_type_options[menu_entry_index]}!\n")
@@ -338,8 +370,13 @@ class Game():
             else:
                 print(f"{char.get_name()}: What Weapon do you want to punish your opponent with!\n")
                 weapon_options = ["Electrocutor", "Powersaw", "Flipper", "Main Menu"]
-                terminal_menu = TerminalMenu(weapon_options)
-                menu_entry_index = terminal_menu.show()
+
+                if platform.system() == "Windows":
+                    menu_entry_index = self.windows_menu(weapon_options)
+                else:
+                    terminal_menu = TerminalMenu(weapon_options)
+                    menu_entry_index = terminal_menu.show()
+
                 while menu_entry_index != 3:
                     try:
                         print(f"You have selected {weapon_options[menu_entry_index]}!\n")
@@ -461,12 +498,16 @@ class Game():
                     print(f"{first.get_name()} has selected: Attack {second.get_name()} Body: {second.get_body_type()}\n")
                     sleep(3)
                 elif bot_entry_index == attack_options[2]:
-                    print(f"{first.get_name()} attempts to push {second.get_name()} into {arena_choice}\n")
+                    print(f"{first.get_name()} attempts to push {second.get_name()} into the Arena's {arena_choice}\n")
                     sleep(3)
             # Human player menu
             else:
-                terminal_menu = TerminalMenu(attack_options)
-                menu_entry_index = terminal_menu.show()
+                if platform.system() == "Windows":
+                    menu_entry_index = self.windows_menu(attack_options)
+                else:
+                    terminal_menu = TerminalMenu(attack_options)
+                    menu_entry_index = terminal_menu.show()
+
                 print(f"You have selected {attack_options[menu_entry_index]}\n")
                 sleep(2)
             # Weapon always attacks either body or Weapon
