@@ -1,0 +1,8 @@
+# Ignore everything by default
+* 
+# Negate, do not ignore python files
+!**/*.py
+# Negate, do not ignore the requirements file (dependencies)
+!requirements.txt
+# Negate, do not ignore the run tests shell file
+!src/tests/run_tests.sh
